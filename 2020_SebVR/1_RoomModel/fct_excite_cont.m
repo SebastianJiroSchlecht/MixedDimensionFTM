@@ -4,7 +4,7 @@ excite = zeros(ftm.Mu,length(t));
 
 % temporal excitation
 a = -1;
-lam = 50*pi;
+lam = 2*pi;
 ft = exp(a*t).*sin(lam*t);
 
 % spatial exciation
