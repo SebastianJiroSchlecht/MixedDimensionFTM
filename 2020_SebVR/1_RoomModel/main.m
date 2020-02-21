@@ -69,6 +69,7 @@ init(mu) = cos(lx.*exc.x).*cos(ly.*exc.y);
 % - time/space dependent excitation 
 % - constant sine excitation on a line (preparation for string)
 % [excite] = fct_excite(ftm, t, exc);
+[excite] = fct_excite_cont(ftm, room, t);
 
 %% Simulation param 
 ybar = zeros(ftm.Mu,length(t));        % state vector 
@@ -83,8 +84,8 @@ state.Cw = state.C(1,:);
 %% Simulation time domain    
 for n = 1:length(time.k)
     % state equation - Use state.A or state.Ac
-    ybar(:,n) = state.Az*ybar(:,indexCor(n-1,len)) + T*fe_t(:,n);
-%     ybar(:,n) = state.Az*ybar(:,indexCor(n-1,len)) + T*excite(:,n);
+%    ybar(:,n) = state.Az*ybar(:,indexCor(n-1,len)) + T*fe_t(:,n);
+     ybar(:,n) = state.Az*ybar(:,indexCor(n-1,len)) + T*excite(:,n);
     
     % output equation
     w(n) = state.Cw*ybar(:,n);
