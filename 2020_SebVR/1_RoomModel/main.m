@@ -2,12 +2,11 @@
 %% Simulation Basics 
 Fs = 44.1e3;                              % Sampling frequency 
 T = (1/Fs);                            % Samplig Time  
-len = Fs*10+1;                          % Simulation duration
-t = 0:T:10;                             % Time vector
-
+t = 0:T:1;                             % Time vector
+len = length(t);                       % Simulation duration
 %% Room model basics
 room.Lx = 5;
-room.Ly = 5;
+room.Ly = 7;
 
 room.c0 = 340;
 room.rho = 1.2041;
@@ -60,12 +59,10 @@ exc.y = 1.8;
 % 
 % 
 % Impulse excitation at exc. 
-for mu = 1:ftm.Mu 
-    lx = ftm.lambdaX(mu);
-    ly = ftm.lambdaY(mu);
-    init(mu) = cos(lx*exc.x)*cos(ly*exc.y);
-end
-
+mu = 1:ftm.Mu;
+lx = ftm.lambdaX(mu);
+ly = ftm.lambdaY(mu);
+init(mu) = cos(lx.*exc.x).*cos(ly.*exc.y);
 
 % Not finished yet --> Will be extended to:
 % - non impulsive exctiation 
@@ -92,11 +89,11 @@ for n = 1:length(time.k)
     % output equation
     w(n) = state.Cw*ybar(:,n);
 end
-return; 
+% return; 
 
 %% Spatial simulation 
-X = 30;
-Y = 30;
+X = 120;
+Y = 130;
 
 %spatial
 deltaX = room.Lx/X;
@@ -107,35 +104,35 @@ y = 0:deltaY:room.Ly;
 
 
 % Spatial eigenfunctions, only preassure is interesting 
+mu = 1:ftm.Mu;
+xi = 1:length(x);
+yi = 1:length(y);
+lx = ftm.lambdaX(mu).';
+ly = ftm.lambdaY(mu).';
+kern = 4*cos(lx.*x(xi)).*cos(ly.* permute(y(yi),[1 3 2]));
+% kern = zeros(ftm.Mu, length(x), length(y));
+% for mu = 1:ftm.Mu
+%     for xi = 1:length(x)
+%         for yi = 1:length(y)
+%             lx = ftm.lambdaX(mu);
+%             ly = ftm.lambdaY(mu);
+%             
+%             kern(mu,xi,yi) = 4*cos(lx*x(xi))*cos(ly*y(yi));
+%         end 
+%     end
+% end
 
-kern = zeros(ftm.Mu, length(x), length(y));
-for mu = 1:ftm.Mu
-    for xi = 1:length(x)
-        for yi = 1:length(y)
-            lx = ftm.lambdaX(mu);
-            ly = ftm.lambdaY(mu);
-            
-            kern(mu,xi,yi) = 4*cos(lx*x(xi))*cos(ly*y(yi));
-        end 
-    end
-end
+% C = zeros(size(kern));
 
-C = zeros(size(kern));
+C = kern.* ftm.nmu(mu).';
+% for mu = 1:ftm.Mu
+%     for xi = 1:length(x)
+%         for yi = 1:length(y)
+%             C(mu,xi,yi) = kern(mu,xi,yi)*ftm.nmu(mu); 
+%         end
+%     end
+% end
 
-for mu = 1:ftm.Mu
-    for xi = 1:length(x)
-        for yi = 1:length(y)
-            C(mu,xi,yi) = kern(mu,xi,yi)*ftm.nmu(mu); 
-        end
-    end
-end
-
-y_spat = zeros(length(t), X+1,Y+1);
-% y_spat = zeros(length(t), xP+1,1);
-% ybar = zeros(ftm.Mu,length(t)); 
-
-for n = 1:length(t)
-%     ybar(:,k) = state.A*ybar(:,indexCor(k-1,len)) + fe_t(:,k);
-    
-    y_spat(n,:,:) = sum(C.*ybar(:,n),1);
-end
+figure(741);
+downsample = 10;
+animateSpaceAndTime(x, y, permute(C, [2,3,1]), ybar.', downsample)
