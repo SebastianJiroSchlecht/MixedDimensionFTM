@@ -111,29 +111,10 @@ yi = 1:length(y);
 lx = ftm.lambdaX(mu).';
 ly = ftm.lambdaY(mu).';
 kern = 4*cos(lx.*x(xi)).*cos(ly.* permute(y(yi),[1 3 2]));
-% kern = zeros(ftm.Mu, length(x), length(y));
-% for mu = 1:ftm.Mu
-%     for xi = 1:length(x)
-%         for yi = 1:length(y)
-%             lx = ftm.lambdaX(mu);
-%             ly = ftm.lambdaY(mu);
-%             
-%             kern(mu,xi,yi) = 4*cos(lx*x(xi))*cos(ly*y(yi));
-%         end 
-%     end
-% end
-
-% C = zeros(size(kern));
 
 C = kern.* ftm.nmu(mu).';
-% for mu = 1:ftm.Mu
-%     for xi = 1:length(x)
-%         for yi = 1:length(y)
-%             C(mu,xi,yi) = kern(mu,xi,yi)*ftm.nmu(mu); 
-%         end
-%     end
-% end
 
+% Animation
 figure(741);
 downsample = 10;
 animateSpaceAndTime(x, y, permute(C, [2,3,1]), ybar.', downsample)

@@ -3,21 +3,24 @@ function [excite] = fct_excite_cont(ftm, room, t)
 excite = zeros(ftm.Mu,length(t));
 
 % temporal excitation
+scaling = 0.01;
 a = -1;
-lam = 2*pi;
-ft = exp(a*t).*sin(lam*t);
+lam = 2*pi*100;
+ft = scaling*exp(a*t).*sin(lam*t);
 
 % spatial exciation
-l = 0.4;
-x0 = 0.3;%room.Lx/2 + l/2;
-x1 = 0.7;%room.Lx/2 - l/2;
-y1 = room.Ly/2;
-y0 = room.Ly/2;
+x0 = 1.3;
+x1 = 3.7;
+y1 = 3;
+y0 = 1;
 
-lamb = 2*pi;
+l = norm([x0;y0] - [x1;y1]);
 
+lamb = 3*pi;
+
+% Sebastian: I corrected to y1 - y0 in the second cos
 fun = @(xi,lx, ly) cos(lx*(x0 + xi*(x1 -x0))).*...
-    cos(ly*(y0 + xi*(x1 - x0))).*sin(lamb*xi);
+    cos(ly*(y0 + xi*(y1 - y0))).*sin(lamb*xi);
 
 
 
