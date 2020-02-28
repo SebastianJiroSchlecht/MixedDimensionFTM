@@ -1,4 +1,6 @@
 %% Include directories 
+clear; clc; close all;
+
 %% Simulation Basics 
 Fs = 44.1e3;                              % Sampling frequency 
 T = (1/Fs);                            % Samplig Time  
@@ -69,7 +71,9 @@ init(mu) = cos(lx.*exc.x).*cos(ly.*exc.y);
 % - time/space dependent excitation 
 % - constant sine excitation on a line (preparation for string)
 % [excite] = fct_excite(ftm, t, exc);
-[excite] = fct_excite_cont(ftm, room, t);
+excite_pos = [4 2; 3 3];
+
+[excite, deflection] = fct_excite_cont(ftm, room, excite_pos, t);
 
 %% Simulation param 
 ybar = zeros(ftm.Mu,length(t));        % state vector 
@@ -115,6 +119,6 @@ kern = 4*cos(lx.*x(xi)).*cos(ly.* permute(y(yi),[1 3 2]));
 C = kern.* ftm.nmu(mu).';
 
 % Animation
-figure(741);
+figure(741); hold on
 downsample = 10;
-animateSpaceAndTime(x, y, permute(C, [2,3,1]), ybar.', downsample)
+animateSpaceAndTime(x, y, permute(C, [2,3,1]), ybar.', excite_pos, deflection, downsample)

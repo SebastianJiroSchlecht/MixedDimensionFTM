@@ -1,4 +1,4 @@
-function [excite] = fct_excite_cont(ftm, room, t)
+function [excite, deflection] = fct_excite_cont(ftm, room, excite_pos, t)
 
 excite = zeros(ftm.Mu,length(t));
 
@@ -9,10 +9,10 @@ lam = 2*pi*100;
 ft = scaling*exp(a*t).*sin(lam*t);
 
 % spatial exciation
-x0 = 4;
-x1 = 2;
-y1 = 3;
-y0 = 3;
+x0 = excite_pos(1,1);
+x1 = excite_pos(1,2);
+y0 = excite_pos(2,1);
+y1 = excite_pos(2,2);
 
 l = norm([x0;y0] - [x1;y1]);
 
@@ -22,9 +22,9 @@ lamb = 3*pi;
 nx = 1/l*(y1 - y0);
 ny = 1/l*(x0 - x1);
 
-% Sebastian: I corrected to y1 - y0 in the second cos
-% fun = @(xi,lx, ly) cos(lx*(x0 + xi*(x1 -x0))).*...
-%     cos(ly*(y0 + xi*(y1 - y0))).*sin(lamb*xi);
+% String deflection
+XI = linspace(0,1,100);
+deflection = sin(lamb * XI.') .* ft;
 
 fun = @(xi,lx, ly) (nx*lx*sin(lx*(x0 + xi*(x1 -x0))).*cos(ly*(y0 + xi*(y1 - y0))) ...
         + ny*ly*cos(lx*(x0 + xi*(x1 -x0))).*sin(ly*(y0 + xi*(y1 - y0)))...
