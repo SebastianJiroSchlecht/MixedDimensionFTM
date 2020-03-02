@@ -1,4 +1,4 @@
-function nmu = fct_nmu(ftm, room) 
+function nmu = fct_nmu_room(ftm, room) 
 
 nmu = zeros(1,ftm.Mu); 
 

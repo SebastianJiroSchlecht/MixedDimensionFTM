@@ -1,4 +1,4 @@
-function [primKern, adjKern] = fct_eigenfunctions(ftm, room, pickup) 
+function [primKern, adjKern] = fct_eigenfunctions_room(ftm, room, pickup) 
 
 primKern = zeros(3,ftm.Mu);
 adjKern = zeros(3,ftm.Mu);

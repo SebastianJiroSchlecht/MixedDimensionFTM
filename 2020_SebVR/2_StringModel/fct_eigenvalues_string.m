@@ -1,4 +1,4 @@
-function [snu, gnu] = fct_eigenvalues(string,ftm)
+function [snu, gnu] = fct_eigenvalues_string(string,ftm)
     l = string.l;
     Nu = ftm.Nu;
     gnu = (1:Nu)*pi/l;

@@ -1,4 +1,4 @@
-function nmu = fct_nmu(ftm,string)
+function nmu = fct_nmu_string(ftm,string)
 
 nmu = zeros(1,ftm.Mu);
 

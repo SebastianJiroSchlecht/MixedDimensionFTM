@@ -1,4 +1,4 @@
-function [kprim, kadj] = fct_eigenfunctions(string, ftm,x)
+function [kprim, kadj] = fct_eigenfunctions_string(string, ftm,x)
 
 kprim = zeros(4,ftm.Mu);
 kadj = zeros(4,ftm.Mu); 
