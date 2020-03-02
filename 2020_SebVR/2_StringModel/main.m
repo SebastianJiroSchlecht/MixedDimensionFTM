@@ -43,7 +43,7 @@ string.c1 = - (string.p*string.A)/(string.E*string.I);
 string.c2 = string.d3/(string.E*string.I);
 
 %% Create string Model
-pickup = 0.5;   % pickup position, relevant for the eigenfunctions in K 
+pickup = 1/pi;   % pickup position, relevant for the eigenfunctions in K 
 [ftm, state] = createModel(string, T, pickup);
 %
 %% Create exciation functions
@@ -54,9 +54,10 @@ pickup = 0.5;   % pickup position, relevant for the eigenfunctions in K
 ybar = zeros(ftm.Mu,len);
 y = zeros(4,len);
 
+ybar(:,1) = T*excite_imp(:,1);
 for k = 1:len
-   ybar(:,k) = state.Az*ybar(:,indexCor(k-1,len)) + T*excite_imp(:,k);
-   y(:,k) = state.C*ybar(:,k); 
+   ybar(:,k) = state.Az*ybar(:,k-1) + T*excite_imp(:,k);
+   y(:,k) = state.C*ybar(:,k);
 end
 
 % write stuff

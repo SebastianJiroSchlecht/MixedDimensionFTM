@@ -85,11 +85,12 @@ fe_t(:,1) = init;
 % reduce state vector (only deflection is simulated)
 state.Cw = state.C(1,:); 
 
-%% Simulation time domain    
-for n = 1:length(time.k)
+%% Simulation time domain   
+ ybar(:,1) = T*excite(:,1);
+for n = 2:length(time.k)
     % state equation - Use state.A or state.Ac
-%    ybar(:,n) = state.Az*ybar(:,indexCor(n-1,len)) + T*fe_t(:,n);
-     ybar(:,n) = state.Az*ybar(:,indexCor(n-1,len)) + T*excite(:,n);
+%    ybar(:,n) = state.Az*ybar(:,n-1) + T*fe_t(:,n);
+     ybar(:,n) = state.Az*ybar(:,n-1) + T*excite(:,n);
     
     % output equation
     w(n) = state.Cw*ybar(:,n);
