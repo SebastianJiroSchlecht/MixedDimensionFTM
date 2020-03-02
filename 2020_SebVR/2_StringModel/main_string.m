@@ -55,7 +55,7 @@ ybar = zeros(ftm.Mu,len);
 y = zeros(4,len);
 
 ybar(:,1) = T*excite_imp(:,1);
-for k = 1:len
+for k = 2:len
    ybar(:,k) = state.Az*ybar(:,k-1) + T*excite_imp(:,k);
    y(:,k) = state.C*ybar(:,k);
 end
@@ -76,6 +76,6 @@ y1 = real(y(1,:)); y1 = y1/max(y1);
 % ybar: Temporal progression of each mode of the string. Very relevant for
 % time-domain simulations  
 
-save('./../1_RoomModel/string.mat','ftm','ybar','Fs')
+save('./2020_SebVR/1_RoomModel/string.mat','ftm','ybar','Fs')
 
 

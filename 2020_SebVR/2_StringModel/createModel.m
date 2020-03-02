@@ -11,7 +11,7 @@ ftm.mu = 1:ftm.Mu;
 % calculate complex pairs of eigenvalues s_nu = sigma_nu \pm j*omega_nu 
 % i.e., only s_nu = sigma_nu + j*omega_nu is calculated 
 
-[ftm.snu, ftm.gnu] = fct_eigenvalues(string,ftm);
+[ftm.snu, ftm.gnu] = fct_eigenvalues_string(string,ftm);
 
 % sort eigenvalues --> Normally not necessary for this case
 % [ftm.snu, ind] = sort(ftm.snu(:),'descend','ComparisonMethod','real');
@@ -27,8 +27,8 @@ ftm.gm = [ftm.gnu(:); ftm.gnu(:)];
 
 %% Eigenfunctions, Scaling 
 ftm.x = x;
-[ftm.kprim, ftm.kadj] = fct_eigenfunctions(string,ftm,ftm.x);
-ftm.nmu = fct_nmu(ftm,string);
+[ftm.kprim, ftm.kadj] = fct_eigenfunctions_string(string,ftm,ftm.x);
+ftm.nmu = fct_nmu_string(ftm,string);
 
 %% state space description
 

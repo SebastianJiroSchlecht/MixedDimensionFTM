@@ -30,7 +30,7 @@ ftm.muy = 1:1:ftm.Muy;
 % First only positive eigenvalues are calculated (see (8)) 
 % The complex conjugated are added separately 
 index = fct_index(ftm);
-[smu, lambdaX, lambdaY] = fct_eigenvalues(ftm, index,room);
+[smu, lambdaX, lambdaY] = fct_eigenvalues_room(ftm, index,room);
 
 % Add complex conjugated 
 ftm.smu = [smu (conj(smu))];
@@ -41,10 +41,10 @@ ftm.Mu = length(ftm.smu);
 
 %% Eigenfunctions
 % at observation point pickup = [x y]
-[ftm.primKern, ftm.adjKern] = fct_eigenfunctions(ftm, room, pickup);
+[ftm.primKern, ftm.adjKern] = fct_eigenfunctions_room(ftm, room, pickup);
 
 %% Scaling factor 
-ftm.nmu = fct_nmu(ftm, room);
+ftm.nmu = fct_nmu_room(ftm, room);
 
 
 %% State space model
