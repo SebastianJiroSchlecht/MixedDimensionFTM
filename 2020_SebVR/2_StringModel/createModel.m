@@ -27,7 +27,7 @@ ftm.gm = [ftm.gnu(:); ftm.gnu(:)];
 
 %% Eigenfunctions, Scaling 
 ftm.x = x;
-[ftm.kprim, ftm.kadj] = fct_eigenfunctions_string(string,ftm,ftm.x);
+[ftm.kprim, ftm.kadj, ftm.Ks] = fct_eigenfunctions_string(string,ftm,ftm.x);
 ftm.nmu = fct_nmu_string(ftm,string);
 
 %% state space description

@@ -1,4 +1,4 @@
-function [primKern, adjKern] = fct_eigenfunctions_room(ftm, room, pickup) 
+function [primKern, adjKern, K1, K2] = fct_eigenfunctions_room(ftm, room, pickup) 
 
 primKern = zeros(3,ftm.Mu);
 adjKern = zeros(3,ftm.Mu);
@@ -22,4 +22,11 @@ for mu = 1:ftm.Mu
                     -4*ly/(smu*room.rho)*cos(lx*x)*sin(ly*y)
                     4*cos(lx*x)*cos(ly*y)]; 
 end
-end
+
+KX = @(x,y,lx,ly,smu) -4.*lx./(smu.*room.rho).*sin(lx.*x).*cos(ly.*y);
+K1 = @(x,y,mu) KX(x,y,ftm.lambdaX(mu), ftm.lambdaY(mu), ftm.smu(mu));
+
+KY = @(x,y,lx,ly,smu) -4.*ly./(smu.*room.rho).*cos(lx.*x).*sin(ly.*y);
+K2 = @(x,y,mu) KY(x,y,ftm.lambdaX(mu), ftm.lambdaY(mu), ftm.smu(mu));
+
+

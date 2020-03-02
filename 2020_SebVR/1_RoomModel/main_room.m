@@ -41,7 +41,7 @@ ftm.Mu = length(ftm.smu);
 
 %% Eigenfunctions
 % at observation point pickup = [x y]
-[ftm.primKern, ftm.adjKern] = fct_eigenfunctions_room(ftm, room, pickup);
+[ftm.primKern, ftm.adjKern, ftm.K1, ftm.K2] = fct_eigenfunctions_room(ftm, room, pickup);
 
 %% Scaling factor 
 ftm.nmu = fct_nmu_room(ftm, room);
@@ -72,6 +72,8 @@ init(mu) = cos(lx.*exc.x).*cos(ly.*exc.y);
 % - constant sine excitation on a line (preparation for string)
 % [excite] = fct_excite(ftm, t, exc);
 excite_pos = [4 2; 3 3];
+ftm.x = @(xi) excite_pos(1,1) + xi*( excite_pos(1,2) - excite_pos(1,1));
+ftm.y = @(xi) excite_pos(2,1) + xi*( excite_pos(2,2) - excite_pos(2,1));
 
 [excite, deflection] = fct_excite_cont(ftm, room, excite_pos, t);
 
@@ -119,7 +121,10 @@ kern = 4*cos(lx.*x(xi)).*cos(ly.* permute(y(yi),[1 3 2]));
 
 C = kern.* ftm.nmu(mu).';
 
+% Save
+save('room.mat','ftm','state','room','ybar','excite_pos','Fs')
+
 % Animation
-figure(741); hold on
-downsample = 10;
-animateSpaceAndTime(x, y, permute(C, [2,3,1]), ybar.', excite_pos, deflection, downsample)
+% figure(741); hold on
+% downsample = 10;
+% animateSpaceAndTime(x, y, permute(C, [2,3,1]), ybar.', excite_pos, deflection, downsample)

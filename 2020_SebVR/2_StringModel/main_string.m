@@ -76,6 +76,6 @@ y1 = real(y(1,:)); y1 = y1/max(y1);
 % ybar: Temporal progression of each mode of the string. Very relevant for
 % time-domain simulations  
 
-save('./2020_SebVR/1_RoomModel/string.mat','ftm','ybar','Fs')
+save('string.mat','ftm','ybar','Fs')
 
 

@@ -1,4 +1,4 @@
-function [kprim, kadj] = fct_eigenfunctions_string(string, ftm,x)
+function [kprim, kadj, Ks] = fct_eigenfunctions_string(string, ftm,x)
 
 kprim = zeros(4,ftm.Mu);
 kadj = zeros(4,ftm.Mu); 
@@ -13,4 +13,9 @@ for mu = 1:ftm.Mu
                    cos(gm*x)
                    -gm^2*cos(gm*x)];
 end
-end
+
+
+K = @(xi,gm,smu) smu/gm*sin(gm*xi);
+Ks = @(xi,mu) K(xi,ftm.gm(mu),ftm.smu(mu));
+
+
