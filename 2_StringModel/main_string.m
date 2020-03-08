@@ -1,4 +1,6 @@
-%% Basic simulation param 
+%% Basic simulation param
+clear; clc; close all;
+
 Fs = 48000; 
 T = 1/Fs;
 dur = 2;
@@ -15,23 +17,23 @@ stringH.d1 = 8 * 10^-5;
 stringH.d3 = 1.4 * 10^-5;
 stringH.Ts = 60.97;     % in N
 
-stringE2.E = 5.4e9;
-stringE2.p = 1140;       
-stringE2.l       = 0.65;
-stringE2.A = pi*(0.5035e-3)^2;        
-stringE2.I = 0.171e-12;     
-stringE2.d1 = 8 * 10^-5;     
-stringE2.d3 = 1.4 * 10^-5;    
-stringE2.Ts  = 13.35; 
-
-stringE.E = 220e9;
-stringE.p = 7850;
-stringE.length = 0.648;
-stringE.A = 5.0671e-8;
-stringE.I = 2.0432e-16;
-stringE.Ts = 72.2016;
-stringE.d1 = 8 * 10^-6;
-stringE.d3 = 1.4 * 10^-6;
+% stringE2.E = 5.4e9;
+% stringE2.p = 1140;       
+% stringE2.l       = 0.65;
+% stringE2.A = pi*(0.5035e-3)^2;        
+% stringE2.I = 0.171e-12;     
+% stringE2.d1 = 8 * 10^-5;     
+% stringE2.d3 = 1.4 * 10^-5;    
+% stringE2.Ts  = 13.35; 
+% 
+% stringE.E = 220e9;
+% stringE.p = 7850;
+% stringE.length = 0.648;
+% stringE.A = 5.0671e-8;
+% stringE.I = 2.0432e-16;
+% stringE.Ts = 72.2016;
+% stringE.d1 = 8 * 10^-6;
+% stringE.d3 = 1.4 * 10^-6;
 
 %% Assign to general variable
 string = stringH;
@@ -45,11 +47,10 @@ string.c2 = string.d3/(string.E*string.I);
 %% Create string Model
 pickup = 1/pi;   % pickup position, relevant for the eigenfunctions in K 
 [ftm, state] = createModel(string, T, pickup);
-%
+
 %% Create exciation functions
 [excite_imp, excite_ham] = createExciations(ftm, string, len, t, T);
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% SIMULATION - Time domain
 ybar = zeros(ftm.Mu,len);
 y = zeros(4,len);
@@ -62,10 +63,14 @@ end
 
 % write stuff
 disp('End Time Domain Sim');
-y1 = real(y(1,:)); y1 = y1/max(y1); 
-% sound(y1,Fs);
+y1 = real(y(1,:)); 
+y1 = y1/max(abs(y1));
+soundsc(y1,Fs);
 % audiowrite('./gitec/full_string/sound.wav',y1, Fs);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Spatial Animation
+
 
 %% Save relevant stuff for room excitation 
 %

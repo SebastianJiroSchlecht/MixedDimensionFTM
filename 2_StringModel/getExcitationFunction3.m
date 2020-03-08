@@ -7,8 +7,6 @@ function excite = getExcitationFunction3(model, len, fe, delta,a1,a2,xe)
 num = length(model.smu);
 
 excite = zeros(num,len);
-Fe = zeros(4,len);
-Fe(4,:) = fe;
 
 for n = 1:num
   %  excite(n,:) = adjKern.kxe(:,n)'*Fe;

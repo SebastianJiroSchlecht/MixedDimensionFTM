@@ -7,9 +7,7 @@ x = pickup.x;
 y = pickup.y;
 
 for mu = 1:ftm.Mu
-%    mux = ftm.index(mu,1); 
-%    muy = ftm.index(mu,2); 
-   
+
    smu = ftm.smu(mu); 
    lx = ftm.lambdaX(mu);
    ly = ftm.lambdaY(mu);
@@ -23,6 +21,7 @@ for mu = 1:ftm.Mu
                     4*cos(lx*x)*cos(ly*y)]; 
 end
 
+% first two components of adjKern
 KX = @(x,y,lx,ly,smu) -4.*lx./(smu.*room.rho).*sin(lx.*x).*cos(ly.*y);
 K1 = @(x,y,mu) KX(x,y,ftm.lambdaX(mu), ftm.lambdaY(mu), ftm.smu(mu));
 

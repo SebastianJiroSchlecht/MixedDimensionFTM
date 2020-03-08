@@ -1,4 +1,4 @@
-function [smu, lambdaX, lambdaY] = fct_eigenvalues_room(ftm, index,room)
+function [smu, lambdaX, lambdaY] = fct_eigenvalues_room(ftm, index, room)
 
 lambdaX = zeros(1,ftm.Mux); 
 lambdaY = zeros(1,ftm.Muy);

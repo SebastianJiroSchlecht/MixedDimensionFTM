@@ -6,15 +6,14 @@ kadj = zeros(4,ftm.Mu);
 for mu = 1:ftm.Mu
     smu = ftm.smu(mu);
     gm = ftm.gm(mu);
-    q1 = string.c1*smu - string.a1;
-%       Setting Full String
+    
     kprim(:,mu) = [smu/gm*sin(gm*x)
                    -gm*sin(gm*x) 
                    cos(gm*x)
                    -gm^2*cos(gm*x)];
 end
 
-
+% First component of kprim
 K = @(xi,gm,smu) smu/gm*sin(gm*xi);
 Ks = @(xi,mu) K(xi,ftm.gm(mu),ftm.smu(mu));
 

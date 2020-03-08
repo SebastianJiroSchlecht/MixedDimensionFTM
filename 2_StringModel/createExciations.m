@@ -5,8 +5,6 @@ fe = zeros(1,len);
 fe(1) = f;
 
 excite_imp = zeros(ftm.Mu,len);
-Fe = zeros(4,len);
-Fe(4,:) = fe;
 
 xe = 0.5*string.l;
 

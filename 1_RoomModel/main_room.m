@@ -2,10 +2,11 @@
 clear; clc; close all;
 
 %% Simulation Basics 
-Fs = 44.1e3;                              % Sampling frequency 
+Fs = 44.1e3;                           % Sampling frequency 
 T = (1/Fs);                            % Samplig Time  
 t = 0:T:1;                             % Time vector
 len = length(t);                       % Simulation duration
+
 %% Room model basics
 room.Lx = 5;
 room.Ly = 7;
@@ -25,12 +26,13 @@ ftm.Mu = ftm.Mux*ftm.Muy;                   % number of all evs
 %necessary due to the matlab indexing starts at 1
 ftm.mux = 1:1:ftm.Mux;
 ftm.muy = 1:1:ftm.Muy;
+
 %% Eigenvalues and indexing 
 
 % First only positive eigenvalues are calculated (see (8)) 
 % The complex conjugated are added separately 
 index = fct_index(ftm);
-[smu, lambdaX, lambdaY] = fct_eigenvalues_room(ftm, index,room);
+[smu, lambdaX, lambdaY] = fct_eigenvalues_room(ftm, index, room);
 
 % Add complex conjugated 
 ftm.smu = [smu (conj(smu))];
@@ -48,7 +50,7 @@ ftm.nmu = fct_nmu_room(ftm, room);
 
 
 %% State space model
-ftm.smu = ftm.smu - 1;
+ftm.smu = ftm.smu - 1; %TODO: what is this? maybe give it a different name?
 state.As = diag(ftm.smu);
 state.Az = diag(exp(ftm.smu*T));
 
@@ -56,10 +58,9 @@ state.C = ftm.primKern.*ftm.nmu;
 
 %% Excitation - DEBUG 
 init = zeros(1,ftm.Mu); 
-exc.x = 2.5; 
+exc.x = 2.5;
 exc.y = 1.8;
-% 
-% 
+ 
 % Impulse excitation at exc. 
 mu = 1:ftm.Mu;
 lx = ftm.lambdaX(mu);
@@ -97,7 +98,7 @@ for n = 2:length(time.k)
     % output equation
     w(n) = state.Cw*ybar(:,n);
 end
-% return; 
+
 
 %% Spatial simulation 
 X = 120;
