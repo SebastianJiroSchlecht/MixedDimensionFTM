@@ -3,7 +3,7 @@ function [excite, deflection] = fct_excite_cont(ftm, room, excite_pos, t)
 excite = zeros(ftm.Mu,length(t));
 
 % temporal excitation
-scaling = 0.01;
+scaling = 10;
 a = -1;
 lam = 2*pi*100;
 ft = scaling*exp(a*t).*sin(lam*t);
@@ -16,7 +16,7 @@ y1 = excite_pos(2,2);
 
 l = norm([x0;y0] - [x1;y1]);
 
-lamb = 3*pi;
+lamb = 1*pi;
 
 % Normal vector 
 nx = 1/l*(y1 - y0);

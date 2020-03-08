@@ -1,7 +1,7 @@
 function [excite] = fct_excite(ftm, t, exc)
 
 % First create temporal exciation
-Tf = 1e-1; % Width of the temporal exciation
+Tf = 1e-3; % Width of the temporal exciation
 w0 = 2*pi/Tf;
 fet = zeros(1,length(t));
 for k = 1:length(t)
@@ -38,10 +38,4 @@ for mu = 1:ftm.Mu
 end
 
 % construct 
-excite = zeros(ftm.Mu, length(t));
-for mu = 1:ftm.Mu
-    excite(mu,:) = init(mu).*fet;
-%       excite(mu,1) = init(mu);
-end
-
-end
+excite = init.'.*fet;

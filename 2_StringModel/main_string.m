@@ -70,6 +70,7 @@ y1 = y1/max(abs(y1));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Spatial Animation
+figure(742); hold on
 downsample = 1;
 x = linspace(0,string.l,1000);
 deflection = state.Cs(x,1:ftm.Mu);
