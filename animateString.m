@@ -12,7 +12,7 @@ stringPoints = size(space,1);
 s = plot(linspace(0,1,stringPoints),zeros(stringPoints,1),'r');
 xlabel('String [x]');
 ylabel('Deflection [y]');
-% ylim([-1 1]*0.01);
+ylim([-1 1]*0.1);
 
 
 for k = 1:downsample:len
@@ -21,6 +21,6 @@ for k = 1:downsample:len
     d = sum(space .* t, 2);
     set(s, 'YData', real(d));
     %% For ploting
-    pause(0.5)
+    pause(0.1)
 end
 
