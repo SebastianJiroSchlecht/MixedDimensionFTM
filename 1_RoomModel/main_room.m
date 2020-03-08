@@ -120,7 +120,7 @@ lx = ftm.lambdaX(mu).';
 ly = ftm.lambdaY(mu).';
 kern = 4*cos(lx.*x(xi)).*cos(ly.* permute(y(yi),[1 3 2]));
 
-C = kern.* ftm.nmu(mu).';
+C = kern.* ftm.nmu(mu).'; % TODO: why is this * and not /?
 
 % Save
 save('./data/room.mat','ftm','state','room','ybar','excite_pos','Fs')

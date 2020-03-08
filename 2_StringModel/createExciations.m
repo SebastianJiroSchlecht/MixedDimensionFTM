@@ -8,10 +8,9 @@ excite_imp = zeros(ftm.Mu,len);
 
 xe = 0.5*string.l;
 
-for mu = 1:ftm.Mu 
-   gm = ftm.gm(mu);
-   excite_imp(mu,:) = sin(gm*xe)*fe;
-end
+mu = 1:ftm.Mu; 
+gm = ftm.gm(mu);
+excite_imp(mu,:) = sin(gm*xe)*fe;
 
 %% 1+cos*hamming 
 Tf = 0.07e-3;

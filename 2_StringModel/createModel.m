@@ -1,7 +1,7 @@
 function [ftm, state] = createModel(string, T, x)
 %% Eigenvalues 
 % Number of complex pairs 
-ftm.Nu = 20; 
+ftm.Nu = 60; 
 ftm.nu = 1:ftm.Nu; 
 
 % Number of individual eigenvalues 
@@ -36,5 +36,6 @@ state.As = diag(ftm.smu);
 state.Az = expm(state.As*T);
 
 state.C = ftm.kprim./ftm.nmu;
+state.Cs = @(xi,mu) ftm.Ks(xi,mu) ./ ftm.nmu(mu).';
 
-end
+% Should be zero: ftm.Ks(x,1:120).' - ftm.kprim(1,:)

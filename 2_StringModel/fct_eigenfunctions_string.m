@@ -14,7 +14,7 @@ for mu = 1:ftm.Mu
 end
 
 % First component of kprim
-K = @(xi,gm,smu) smu/gm*sin(gm*xi);
+K = @(xi,gm,smu) smu./gm.*sin(gm.*xi);
 Ks = @(xi,mu) K(xi,ftm.gm(mu),ftm.smu(mu));
 
 

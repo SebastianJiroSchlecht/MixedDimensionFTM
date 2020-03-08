@@ -65,12 +65,15 @@ end
 disp('End Time Domain Sim');
 y1 = real(y(1,:)); 
 y1 = y1/max(abs(y1));
-soundsc(y1,Fs);
+% soundsc(y1,Fs);
 % audiowrite('./gitec/full_string/sound.wav',y1, Fs);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Spatial Animation
-
+downsample = 1;
+x = linspace(0,1,1000);
+deflection = state.Cs(x,1:ftm.Mu);
+animateString(deflection.', ybar.', downsample);
 
 %% Save relevant stuff for room excitation 
 %
