@@ -122,7 +122,7 @@ kern = 4*cos(lx.*x(xi)).*cos(ly.* permute(y(yi),[1 3 2]));
 C = kern.* ftm.nmu(mu).';
 
 % Save
-save('room.mat','ftm','state','room','ybar','excite_pos','Fs')
+save('./data/room.mat','ftm','state','room','ybar','excite_pos','Fs')
 
 % Animation
 % figure(741); hold on
