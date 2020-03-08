@@ -18,8 +18,8 @@ pickup.x = 9;
 pickup.y = 9;
 
 %% FTM Basics
-ftm.Mux = 42;                               % number of evs in x-direction
-ftm.Muy = 42;                               % number of evs in y-direction
+ftm.Mux = 12;                               % number of evs in x-direction
+ftm.Muy = 12;                               % number of evs in y-direction
 
 ftm.Mu = ftm.Mux*ftm.Muy;                   % number of all evs
 
@@ -104,8 +104,8 @@ end
 
 
 %% Spatial simulation
-X = 220;
-Y = 230;
+X = 120;
+Y = 130;
 
 %spatial
 x = linspace(0,room.Lx,X);
@@ -120,7 +120,7 @@ kern = 4*cos(lx.*x).*cos(ly.* permute(y,[1 3 2]));
 C = kern./ftm.nmu(mu).';
 
 % Save
-% save('./data/room.mat','ftm','state','room','ybar','excite_pos','Fs')
+save('./data/room.mat','ftm','state','room','ybar','Fs')
 
 % Animation
 figure(741); hold on
