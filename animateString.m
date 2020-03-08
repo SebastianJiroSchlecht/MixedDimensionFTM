@@ -6,7 +6,6 @@ function  animateString(space, time, downsample)
 % Sebastian J. Schlecht, Friday, 21 February 2020
 
 len = size(time,1);
-% time = permute(time,[3 4 2 1]);
 
 stringPoints = size(space,1);
 s = plot(linspace(0,1,stringPoints),zeros(stringPoints,1),'r');

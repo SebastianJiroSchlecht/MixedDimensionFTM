@@ -12,6 +12,6 @@ for mu = 1:ftm.Mu
    i2 = -8*ly^2/(room.rho*smu^2)*room.Lx*room.Ly;
    i3 = 8/(room.rho*room.c0^2)*room.Lx*room.Ly;
    
-   nmu(mu) = inv(i1+i2+i3);
+   nmu(mu) = (i1+i2+i3);
 end
 end

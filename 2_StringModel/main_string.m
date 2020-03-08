@@ -83,7 +83,6 @@ animateString(deflection.', ybar.', downsample);
 % the first line of C is relevant 
 % ybar: Temporal progression of each mode of the string. Very relevant for
 % time-domain simulations  
-
-save('./data/string.mat','ftm','ybar','Fs')
+save('./data/string.mat','ftm','state','ybar','Fs')
 
 

@@ -54,7 +54,7 @@ ftm.smu = ftm.smu - 1; %TODO: what is this? maybe give it a different name?
 state.As = diag(ftm.smu);
 state.Az = diag(exp(ftm.smu*T));
 
-state.C = ftm.primKern.*ftm.nmu;
+state.C = ftm.primKern./ftm.nmu;
 
 %% Excitation - DEBUG 
 init = zeros(1,ftm.Mu); 
@@ -120,7 +120,7 @@ lx = ftm.lambdaX(mu).';
 ly = ftm.lambdaY(mu).';
 kern = 4*cos(lx.*x(xi)).*cos(ly.* permute(y(yi),[1 3 2]));
 
-C = kern.* ftm.nmu(mu).'; % TODO: why is this * and not /?
+C = kern./ftm.nmu(mu).';
 
 % Save
 save('./data/room.mat','ftm','state','room','ybar','excite_pos','Fs')
