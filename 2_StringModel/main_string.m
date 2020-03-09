@@ -1,7 +1,7 @@
 %% Basic simulation param
 clear; clc; close all;
 
-Fs = 48000; 
+Fs = 44100; 
 T = 1/Fs;
 dur = 2;
 len = Fs * dur;
@@ -10,7 +10,7 @@ t = 0:T:dur-T;
 %% String parameters
 stringH.E = 5.4e9;
 stringH.p = 1140;       %in kg/m^3
-stringH.l = sqrt(5);
+stringH.l = 1;
 stringH.A = 0.5188e-6;  %in m^2
 stringH.I = 0.171e-12;
 stringH.d1 = 8 * 10^-5;
@@ -55,9 +55,9 @@ pickup = 1/pi;   % pickup position, relevant for the eigenfunctions in K
 ybar = zeros(ftm.Mu,len);
 y = zeros(4,len);
 
-ybar(:,1) = T*excite_imp(:,1);
+ybar(:,1) = T*excite_ham(:,1);
 for k = 2:len
-   ybar(:,k) = state.Az*ybar(:,k-1) + T*excite_imp(:,k);
+   ybar(:,k) = state.Az*ybar(:,k-1) + T*excite_ham(:,k);
    y(:,k) = state.C*ybar(:,k);
 end
 
@@ -69,13 +69,6 @@ y1 = y1/max(abs(y1));
 % audiowrite('./gitec/full_string/sound.wav',y1, Fs);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Spatial Animation
-figure(742); hold on
-downsample = 1;
-x = linspace(0,string.l,1000);
-deflection = state.Cs(x,1:ftm.Mu);
-animateString(deflection.', ybar.', downsample);
-
 %% Save relevant stuff for room excitation 
 %
 % ftm.kprim: primal eigenfunctions for the pickup position ftm.x
@@ -85,5 +78,15 @@ animateString(deflection.', ybar.', downsample);
 % ybar: Temporal progression of each mode of the string. Very relevant for
 % time-domain simulations  
 save('./data/string.mat','ftm','state','ybar','Fs')
+
+
+%% Spatial Animation
+figure(742); hold on
+downsample = 1;
+x = linspace(0,string.l,1000);
+deflection = state.Cs(x,1:ftm.Mu);
+animateString(deflection.', ybar.', downsample);
+
+
 
 
