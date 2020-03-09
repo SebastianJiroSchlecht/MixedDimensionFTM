@@ -1,7 +1,8 @@
-function [excite] = fct_excite(ftm, t, exc)
+function [excite] = fct_excite(ftm, T, exc)
 
 % First create temporal exciation
 Tf = 1e-3; % Width of the temporal exciation
+t = 0:T:Tf;
 w0 = 2*pi/Tf;
 fet = zeros(1,length(t));
 for k = 1:length(t)

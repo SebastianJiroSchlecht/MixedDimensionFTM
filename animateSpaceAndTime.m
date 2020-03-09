@@ -6,7 +6,7 @@ function  animateSpaceAndTime(x, y, space, time, downsample)
 % Sebastian J. Schlecht, Friday, 21 February 2020
 
 len = size(time,1);
-time = permute(time,[3 4 2 1]);
+% time = permute(time,[3 4 2 1]);
 
 h = surf(x, y, zeros(length(y),length(x)),'edgecolor','none'); 
 % zlim([-1 1]);
@@ -20,7 +20,8 @@ caxis([-1 1])
 
 for k = 1:downsample:len
     
-    t = time(:,:,:,k);
+%     t = time(:,:,:,k);
+    t = permute(time(k,:),[3 4 2 1]);
     d = sum(space .* t, 3);
     set(h, 'ZData', real(d).' );
 
