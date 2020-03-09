@@ -71,9 +71,10 @@ init(mu) = cos(lx.*exc.x).*cos(ly.*exc.y);
 % - non impulsive exctiation
 % - time/space dependent excitation
 % - constant sine excitation on a line (preparation for string)
-switch 'string'
+switch 'point'
     case 'point'
         [excite] = fct_excite(ftm, t, exc);
+        excite = excite*10;
     case 'string'
         excite_pos = [4 2; 3 4];
         ftm.x = @(xi) excite_pos(1,1) + xi*( excite_pos(1,2) - excite_pos(1,1));
