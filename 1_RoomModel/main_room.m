@@ -4,12 +4,12 @@ clear; clc; close all;
 %% Simulation Basics
 Fs = 44.1e3;                           % Sampling frequency
 T = (1/Fs);                            % Samplig Time
-t = 0:T:.1;                             % Time vector
+t = 0:T:2-T;                             % Time vector
 len = length(t);                       % Simulation duration
 
 %% Room model basics
-room.Lx = 5;
-room.Ly = 7;
+room.Lx = 6;
+room.Ly = 6;
 
 room.c0 = 340;
 room.rho = 1.2041;
@@ -18,8 +18,8 @@ pickup.x = 9;
 pickup.y = 9;
 
 %% FTM Basics
-ftm.Mux = 12;                               % number of evs in x-direction
-ftm.Muy = 12;                               % number of evs in y-direction
+ftm.Mux = 10;                               % number of evs in x-direction
+ftm.Muy = 10;                               % number of evs in y-direction
 
 ftm.Mu = ftm.Mux*ftm.Muy;                   % number of all evs
 
@@ -79,7 +79,8 @@ switch 'string'
         ftm.x = @(xi) excite_pos(1,1) + xi*( excite_pos(1,2) - excite_pos(1,1));
         ftm.y = @(xi) excite_pos(2,1) + xi*( excite_pos(2,2) - excite_pos(2,1));
         
-        [excite, deflection] = fct_excite_cont(ftm, room, excite_pos, t);
+%         [excite, deflection] = fct_excite_cont(ftm, room, excite_pos, t);
+        [excite,T12] = fct_excite_string(ftm, room);
 end
 %% Simulation param
 ybar = zeros(ftm.Mu,length(t));        % state vector
@@ -93,6 +94,7 @@ state.Cw = state.C(1,:);
 
 %% Simulation time domain
 ybar(:,1) = T*excite(:,1);
+w(1) = state.Cw*ybar(:,1);
 for n = 2:length(time.k)
     % state equation - Use state.A or state.Ac
     %    ybar(:,n) = state.Az*ybar(:,n-1) + T*fe_t(:,n);
@@ -101,11 +103,13 @@ for n = 2:length(time.k)
     % output equation
     w(n) = state.Cw*ybar(:,n);
 end
-
+w = real(w); 
+out = w/max(w); 
+sound(w,Fs); 
 
 %% Spatial simulation
-X = 120;
-Y = 130;
+X = 200;
+Y = 200;
 
 %spatial
 x = linspace(0,room.Lx,X);
@@ -122,7 +126,7 @@ C = kern./ftm.nmu(mu).';
 % Save
 save('./data/room.mat','ftm','state','room','ybar','Fs')
 
-% Animation
+%% Animation
 figure(741); hold on
-downsample = 10;
+downsample = 1;
 animateSpaceAndTime(x, y, permute(C, [2,3,1]), ybar.', downsample)
