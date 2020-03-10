@@ -3,7 +3,7 @@ clear; clc; close all;
 
 %% Room model basics
 room.Lx = 6;
-room.Ly = 6;
+room.Ly = 8;
 
 room.c0 = 340;
 room.rho = 1.2041;
@@ -12,8 +12,8 @@ pickup.x = 9;
 pickup.y = 9;
 
 %% FTM Basics
-ftm.Mux = 10;                               % number of evs in x-direction
-ftm.Muy = 10;                               % number of evs in y-direction
+ftm.Mux = 50;                               % number of evs in x-direction
+ftm.Muy = 50;                               % number of evs in y-direction
 
 %% Eigenvalues and indexing
 index = fct_index(ftm);
@@ -36,14 +36,15 @@ ftm.nmu = fct_nmu_room(ftm, room);
 %% Simulation Basics
 Fs = 44.1e3;                           % Sampling frequency
 T = (1/Fs);                            % Samplig Time
-t = 0:T:0.1-T;                             % Time vector
+dur = 0.2;
+t = 0:T:dur-T;                             % Time vector
 len = length(t);                       % Simulation duration
 
 %% Excitation
 exc.x = 2.5;
 exc.y = 1.8;
-        
-switch 'string'
+
+switch 'string2'
     case 'dirac'
         % Impulse excitation at exc.
         mu = 1:ftm.Mu;
@@ -51,23 +52,37 @@ switch 'string'
         ly = ftm.lambdaY(mu);
         init(mu) = cos(lx.*exc.x).*cos(ly.*exc.y);
         
-%         excite = zeros(ftm.Mu, length(t));
+        %         excite = zeros(ftm.Mu, length(t));
         excite(:,1) = init;
-
+        
     case 'point'
         [excite] = fct_excite(ftm, T, exc);
         
     case 'string'
+        %%
         excite_pos = [4 2; 3 4];
         ftm.x = @(xi) excite_pos(1,1) + xi*( excite_pos(1,2) - excite_pos(1,1));
         ftm.y = @(xi) excite_pos(2,1) + xi*( excite_pos(2,2) - excite_pos(2,1));
         
-        
-        [excite_,T12_, deflection] = fct_excite_cont(ftm, room, excite_pos, t);
-        
         s = load('string.mat');
-        [excite,T12] = fct_excite_string(ftm, room, s);
-        ok = 1;
+        pos = [ftm.x(0), ftm.y(0); ftm.x(1), ftm.y(1)];
+        [excite,T12] = fct_excite_string(ftm, room, s, pos);
+        T12(1:3,1:3)
+    case 'string2'
+        %%
+        string = stringParameters();
+        [s.ftm, s.state] = createModel(string, T, 0.5);
+        
+        %% Create exciation functions
+        len = Fs * dur;
+        [excite_imp, excite_ham] = createExciations(s.ftm, string, len, t, T);
+        
+        %% SIMULATION - Time domain
+        [s.ybar,s.y] = simulateTimeDomain(len,s.state.Az,s.state.C,excite_ham,T);
+        
+        T12 = connectModels(string.x, string.y, s.ftm.Ks, s.ftm.nmu, ftm.K1, ftm.K2, s.ftm.Mu, ftm.Mu);
+        T12(1:3,1:3)
+        excite = T12*s.ybar;
 end
 
 
@@ -105,7 +120,7 @@ kern = 4*cos(lx.*x).*cos(ly.* permute(y,[1 3 2]));
 C = kern./ftm.nmu(mu).';
 
 % Save
-save('./data/room.mat','ftm','state','room','ybar','Fs')
+% save('./data/room.mat','ftm','state','room','ybar','Fs')
 
 %% Animation
 figure(741); hold on

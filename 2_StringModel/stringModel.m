@@ -7,7 +7,7 @@ t = 0:T:dur-T;
 %% String parameters
 stringH.E = 5.4e9;
 stringH.p = 1140;       %in kg/m^3
-stringH.l = stringLength;
+stringH.l = 0.65;
 stringH.A = 0.5188e-6;  %in m^2
 stringH.I = 0.171e-12;
 stringH.d1 = 8 * 10^-5;
@@ -16,7 +16,7 @@ stringH.Ts = 60.97;     % in N
 
 % stringE2.E = 5.4e9;
 % stringE2.p = 1140;       
-% stringE2.l       = stringLength;
+% stringE2.l       = 0.65;
 % stringE2.A = pi*(0.5035e-3)^2;        
 % stringE2.I = 0.171e-12;     
 % stringE2.d1 = 8 * 10^-5;     

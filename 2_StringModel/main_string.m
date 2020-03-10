@@ -3,7 +3,7 @@ clear; clc; close all;
 
 Fs = 44100; 
 T = 1/Fs;
-dur = 2;
+dur = 0.1;
 len = Fs * dur;
 t = 0:T:dur-T;
 
