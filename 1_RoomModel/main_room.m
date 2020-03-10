@@ -51,8 +51,7 @@ switch 'string2'
         lx = ftm.lambdaX(mu);
         ly = ftm.lambdaY(mu);
         init(mu) = cos(lx.*exc.x).*cos(ly.*exc.y);
-        
-        %         excite = zeros(ftm.Mu, length(t));
+
         excite(:,1) = init;
         
     case 'point'
@@ -81,10 +80,15 @@ switch 'string2'
         [s.ybar,s.y] = simulateTimeDomain(len,s.state.Az,s.state.C,excite_ham,T);
         
         T12 = connectModels(string.x, string.y, s.ftm.Ks, s.ftm.nmu, ftm.K1, ftm.K2, s.ftm.Mu, ftm.Mu);
-        T12(1:3,1:3)
         excite = T12*s.ybar;
 end
 
+%% Analyze T12
+[f,fInd] = sort(imag(ftm.smu(1:end/2)),'ascend');
+
+T12_ = T12(1:end/2,1:end/2);
+figure(152);
+plotMatrix(abs(T12_(fInd,:)));
 
 
 %% SIMULATION

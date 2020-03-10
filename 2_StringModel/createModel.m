@@ -1,7 +1,7 @@
 function [ftm, state] = createModel(string, T, x)
 %% Eigenvalues 
 % Number of complex pairs 
-ftm.Nu = 5; 
+ftm.Nu = 10; % TODO: changed from 5
 ftm.nu = 1:ftm.Nu; 
 
 % Number of individual eigenvalues 
