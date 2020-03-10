@@ -1,6 +1,5 @@
-function [excite, deflection] = fct_excite_cont(ftm, room, excite_pos, t)
+function [excite, T12, deflection] = fct_excite_cont(ftm, room, excite_pos, t)
 
-excite = zeros(ftm.Mu,length(t));
 
 % temporal excitation
 scaling = 10;
@@ -30,12 +29,15 @@ fun = @(xi,lx, ly) (nx*lx*sin(lx*(x0 + xi*(x1 -x0))).*cos(ly*(y0 + xi*(y1 - y0))
         + ny*ly*cos(lx*(x0 + xi*(x1 -x0))).*sin(ly*(y0 + xi*(y1 - y0)))...
         ).*sin(lamb*xi);
 
+T12 = zeros(ftm.Mu,1);    
 for mu = 1:ftm.Mu
     lx = ftm.lambdaX(mu);
     ly = ftm.lambdaY(mu);
     
     foo = integral(@(xi) fun(xi,lx,ly),0, 1);
     
-    excite(mu,:) = foo*l*ft*(-4/(room.rho*conj(ftm.smu(mu))));
+    T12(mu,:) = foo*l*(-4/(room.rho*conj(ftm.smu(mu))));
 end
-end
+
+excite = T12 * ft;
+

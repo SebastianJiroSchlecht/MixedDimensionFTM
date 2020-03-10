@@ -1,6 +1,6 @@
-function [excite, T12] = fct_excite_string(ftm, room)
+function [excite, T12] = fct_excite_string(ftm, room, s)
 
-s = load('string.mat');
+
 
 % spatial exciation
 x0 = 5;

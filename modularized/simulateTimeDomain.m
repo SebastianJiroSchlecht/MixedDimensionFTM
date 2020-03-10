@@ -10,12 +10,13 @@ end
 w = Cw * ybar;
 w = real(w);
 
+% excite_ = [excite zeros(Mu,duration)];
 % ybar(:,1) = T*excite(:,1);
-% w(1) = state.Cw*ybar(:,1);
-% for n = 2:length(time.k)
+% w(1) = Cw*ybar(:,1);
+% for n = 2:duration
 %     % state equation - Use state.A or state.Ac
-%     ybar(:,n) = state.Az*ybar(:,n-1) + T*excite(:,n);
+%     ybar(:,n) = Az*ybar(:,n-1) + T*excite_(:,n);
 %     
 %     % output equation
-%     w(n) = state.Cw*ybar(:,n);
+%     w(n) = Cw*ybar(:,n);
 % end

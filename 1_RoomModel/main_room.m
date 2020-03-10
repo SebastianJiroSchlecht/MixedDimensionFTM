@@ -12,8 +12,8 @@ pickup.x = 9;
 pickup.y = 9;
 
 %% FTM Basics
-ftm.Mux = 50;                               % number of evs in x-direction
-ftm.Muy = 50;                               % number of evs in y-direction
+ftm.Mux = 10;                               % number of evs in x-direction
+ftm.Muy = 10;                               % number of evs in y-direction
 
 %% Eigenvalues and indexing
 index = fct_index(ftm);
@@ -32,7 +32,6 @@ ftm.nmu = fct_nmu_room(ftm, room);
 
 
 
-%% SIMULATION
 
 %% Simulation Basics
 Fs = 44.1e3;                           % Sampling frequency
@@ -44,7 +43,7 @@ len = length(t);                       % Simulation duration
 exc.x = 2.5;
 exc.y = 1.8;
         
-switch 'point'
+switch 'string'
     case 'dirac'
         % Impulse excitation at exc.
         mu = 1:ftm.Mu;
@@ -64,13 +63,16 @@ switch 'point'
         ftm.y = @(xi) excite_pos(2,1) + xi*( excite_pos(2,2) - excite_pos(2,1));
         
         
-        [excite, deflection] = fct_excite_cont(ftm, room, excite_pos, t);
-%         [excite,T12] = fct_excite_string(ftm, room);
+        [excite_,T12_, deflection] = fct_excite_cont(ftm, room, excite_pos, t);
+        
+        s = load('string.mat');
+        [excite,T12] = fct_excite_string(ftm, room, s);
+        ok = 1;
 end
 
 
 
-
+%% SIMULATION
 
 %% State space model
 ftm.smu = ftm.smu - 1; %TODO: what is this? maybe give it a different name?
@@ -103,7 +105,7 @@ kern = 4*cos(lx.*x).*cos(ly.* permute(y,[1 3 2]));
 C = kern./ftm.nmu(mu).';
 
 % Save
-% save('./data/room.mat','ftm','state','room','ybar','Fs')
+save('./data/room.mat','ftm','state','room','ybar','Fs')
 
 %% Animation
 figure(741); hold on

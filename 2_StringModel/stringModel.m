@@ -1,16 +1,13 @@
-%% Basic simulation param
-clear; clc; close all;
+function [excite_imp, excite_ham, string, ybar, y] = stringModel( stringLength, dur, Fs ) 
 
-Fs = 44100; 
 T = 1/Fs;
-dur = 2;
 len = Fs * dur;
 t = 0:T:dur-T;
 
 %% String parameters
 stringH.E = 5.4e9;
 stringH.p = 1140;       %in kg/m^3
-stringH.l = 1;
+stringH.l = stringLength;
 stringH.A = 0.5188e-6;  %in m^2
 stringH.I = 0.171e-12;
 stringH.d1 = 8 * 10^-5;
@@ -19,7 +16,7 @@ stringH.Ts = 60.97;     % in N
 
 % stringE2.E = 5.4e9;
 % stringE2.p = 1140;       
-% stringE2.l       = 0.65;
+% stringE2.l       = stringLength;
 % stringE2.A = pi*(0.5035e-3)^2;        
 % stringE2.I = 0.171e-12;     
 % stringE2.d1 = 8 * 10^-5;     
@@ -52,41 +49,12 @@ pickup = 1/pi;   % pickup position, relevant for the eigenfunctions in K
 [excite_imp, excite_ham] = createExciations(ftm, string, len, t, T);
 
 %% SIMULATION - Time domain
-ybar = zeros(ftm.Mu,len);
-y = zeros(4,len);
+[ybar,y] = simulateTimeDomain(len,state.Az,state.C,excite_ham,T);
 
-ybar(:,1) = T*excite_ham(:,1);
-for k = 2:len
-   ybar(:,k) = state.Az*ybar(:,k-1) + T*excite_ham(:,k);
-   y(:,k) = state.C*ybar(:,k);
-end
-
-% write stuff
-disp('End Time Domain Sim');
-y1 = real(y(1,:)); 
-y1 = y1/max(abs(y1));
-% soundsc(y1,Fs);
-% audiowrite('./gitec/full_string/sound.wav',y1, Fs);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Save relevant stuff for room excitation 
-%
-% ftm.kprim: primal eigenfunctions for the pickup position ftm.x
-% ftm.nmu: scaling factors nmu (in the room n_nu)
-% state.C: Important for the creation of matrices T. For the velocity only
-% the first line of C is relevant 
-% ybar: Temporal progression of each mode of the string. Very relevant for
-% time-domain simulations  
-save('./data/string.mat','ftm','state','ybar','Fs')
-
-
-%% Spatial Animation
-figure(742); hold on
-downsample = 1;
-x = linspace(0,string.l,1000);
-deflection = state.Cs(x,1:ftm.Mu);
-animateString(deflection.', ybar.', downsample);
-
-
-
-
+% ybar = zeros(ftm.Mu,len);
+% y = zeros(4,len);
+% ybar(:,1) = T*excite_ham(:,1);
+% for k = 2:len
+%    ybar(:,k) = state.Az*ybar(:,k-1) + T*excite_ham(:,k);
+%    y(:,k) = state.C*ybar(:,k);
+% end
