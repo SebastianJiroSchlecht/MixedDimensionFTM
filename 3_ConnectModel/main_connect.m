@@ -4,7 +4,7 @@ clear; clc; close all;
 s = load('string.mat');
 r = load('room.mat');
 
-T12 = connectModels(r.ftm.x, r.ftm.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K1, s.ftm.Mu, r.ftm.Mu);
+T12 = connectModels(r.ftm.x, r.ftm.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
 
 %%
 scaling = 10000;

@@ -1,12 +1,12 @@
-function [excite, T12] = fct_excite_string(ftm, room, s)
-
+function [excite, T12] = fct_excite_string(ftm, room, s, pos)
 
 
 % spatial exciation
-x0 = 5;
-x1 = 2;
-y0 = 3;
-y1 = 3;
+x0 = pos(1,1);
+x1 = pos(2,1);
+y0 = pos(1,2);
+y1 = pos(2,2);
+
 
 % length == string length
 l = norm([x0;y0] - [x1;y1]);
@@ -24,7 +24,8 @@ T12 = zeros(ftm.Mu, s.ftm.Mu);
 gamma = 1e3;
 
 
-fun = @(xi, lx, ly, gnu) (nx*lx*sin(lx*(x0 + xi*(x1 -x0))).*cos(ly*(y0 + xi*(y1 - y0))) ...
+fun = @(xi, lx, ly, gnu) ...
+         (nx*lx*sin(lx*(x0 + xi*(x1 -x0))).*cos(ly*(y0 + xi*(y1 - y0))) ...
         + ny*ly*cos(lx*(x0 + xi*(x1 -x0))).*sin(ly*(y0 + xi*(y1 - y0)))...
         ).*sin(gnu*xi);
 
@@ -40,6 +41,7 @@ for mu = 1:ftm.Mu
         foo = integral(@(xi) fun(xi,lx,ly, gnu),0, 1);
         vec(nu) = gamma*l*(-4/(room.rho*conj(ftm.smu(mu))))*...
             snu/gnu*1/s.ftm.nmu(nu)*foo;
+        % TODO: with or without conj?
    end
    T12(mu,:) = vec; 
 end
