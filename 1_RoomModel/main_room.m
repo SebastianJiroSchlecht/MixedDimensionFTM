@@ -95,7 +95,7 @@ switch 'diracString'
         
         %% Connect models
         T12 = connectPointModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, ftm.K3, s.ftm.Mu, ftm.Mu);
-        excite = T12*s.ybar / 1000;
+        excite = T12*s.ybar;
 end
 
 %% Analyze T12
