@@ -44,7 +44,7 @@ len = length(t);                       % Simulation duration
 exc.x = 2.5;
 exc.y = 1.8;
 
-switch 'string2'
+switch 'point'
     case 'dirac'
         % Impulse excitation at exc.
         mu = 1:ftm.Mu;
@@ -66,7 +66,7 @@ switch 'string2'
         s = load('string.mat');
         pos = [ftm.x(0), ftm.y(0); ftm.x(1), ftm.y(1)];
         [excite,T12] = fct_excite_string(ftm, room, s, pos);
-        T12(1:3,1:3)
+        
     case 'string2'
         %%
         string = stringParameters();
@@ -81,6 +81,10 @@ switch 'string2'
         
         T12 = connectModels(string.x, string.y, s.ftm.Ks, s.ftm.nmu, ftm.K1, ftm.K2, s.ftm.Mu, ftm.Mu);
         excite = T12*s.ybar;
+        
+    case 'diracString'
+        
+        
 end
 
 %% Analyze T12

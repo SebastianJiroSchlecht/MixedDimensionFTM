@@ -1,4 +1,6 @@
 function [excite_imp, excite_ham] = createExciations(ftm, string, len, t, T)
+% TODO: fix function name
+
 %% Exciations
 f = -0.05/(string.E*string.I);
 fe = zeros(1,len);
@@ -14,7 +16,7 @@ excite_imp(mu,:) = gm .* sin(gm*xe)*fe;
 
 %% 1+cos*hamming 
 Tf = 0.07e-3;
-delta = 0.1;
+delta = 0.0134;
 fe = createExcitationFunction(t,Tf);
 fe = fe.*-1/(string.E*string.I);
 % a1 = 0.54;
