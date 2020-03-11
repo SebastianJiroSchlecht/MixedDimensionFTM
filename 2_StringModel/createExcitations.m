@@ -1,4 +1,4 @@
-function [excite_imp, excite_ham] = createExciations(ftm, string, len, t, T)
+function [excite_imp, excite_ham] = createExcitations(ftm, string, len, t, T)
 % TODO: fix function name
 
 %% Exciations

@@ -73,7 +73,7 @@ switch 'diracString'
         
         %% Create exciation functions
         len = Fs * dur;
-        [excite_imp, excite_ham] = createExciations(s.ftm, string, len, t, T);
+        [excite_imp, excite_ham] = createExcitations(s.ftm, string, len, t, T);
         
         %% SIMULATION - Time domain
         [s.ybar,s.y] = simulateTimeDomain(len,s.state.Az,s.state.C,excite_ham,T);
@@ -88,7 +88,7 @@ switch 'diracString'
         
         %% Create exciation functions
         len = Fs * dur;
-        [excite_imp, excite_ham] = createExciations(s.ftm, string, len, t, T);
+        [excite_imp, excite_ham] = createExcitations(s.ftm, string, len, t, T);
         
         %% SIMULATION - Time domain
         [s.ybar,s.y] = simulateTimeDomain(len,s.state.Az,s.state.C,excite_ham,T);
