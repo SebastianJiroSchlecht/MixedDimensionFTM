@@ -88,7 +88,7 @@ end
 
 T12_ = T12(1:end/2,1:end/2);
 figure(152);
-plotMatrix(abs(T12_(fInd,:)));
+plotMatrix(clip(mag2db(abs(T12_(fInd,:))),[-50 10]));
 
 
 %% SIMULATION
