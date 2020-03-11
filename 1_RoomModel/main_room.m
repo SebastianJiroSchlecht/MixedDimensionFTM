@@ -23,7 +23,7 @@ ftm.Mu = length(ftm.smu);
 
 %% Eigenfunctions
 % at observation point pickup = [x y]
-[ftm.primKern, ftm.adjKern, ftm.K1, ftm.K2] = fct_eigenfunctions_room(ftm, room, pickup);
+[ftm.primKern, ftm.adjKern, ftm.K1, ftm.K2, ftm.K3] = fct_eigenfunctions_room(ftm, room, pickup);
 
 %% Scaling factor
 ftm.nmu = fct_nmu_room(ftm, room);
@@ -44,7 +44,7 @@ len = length(t);                       % Simulation duration
 exc.x = 2.5;
 exc.y = 1.8;
 
-switch 'point'
+switch 'diracString'
     case 'dirac'
         % Impulse excitation at exc.
         mu = 1:ftm.Mu;
@@ -68,7 +68,6 @@ switch 'point'
         [excite,T12] = fct_excite_string(ftm, room, s, pos);
         
     case 'string2'
-        %%
         string = stringParameters();
         [s.ftm, s.state] = createModel(string, T, 0.5);
         
@@ -79,12 +78,24 @@ switch 'point'
         %% SIMULATION - Time domain
         [s.ybar,s.y] = simulateTimeDomain(len,s.state.Az,s.state.C,excite_ham,T);
         
+        %% Connect models
         T12 = connectModels(string.x, string.y, s.ftm.Ks, s.ftm.nmu, ftm.K1, ftm.K2, s.ftm.Mu, ftm.Mu);
         excite = T12*s.ybar;
         
     case 'diracString'
+        string = stringParameters();
+        [s.ftm, s.state] = createModel(string, T, 0.5);
         
+        %% Create exciation functions
+        len = Fs * dur;
+        [excite_imp, excite_ham] = createExciations(s.ftm, string, len, t, T);
         
+        %% SIMULATION - Time domain
+        [s.ybar,s.y] = simulateTimeDomain(len,s.state.Az,s.state.C,excite_ham,T);
+        
+        %% Connect models
+        T12 = connectPointModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, ftm.K3, s.ftm.Mu, ftm.Mu);
+        excite = T12*s.ybar / 1000;
 end
 
 %% Analyze T12
@@ -95,14 +106,15 @@ figure(152);
 plotMatrix(clip(mag2db(abs(T12_(fInd,:))),[-50 10]));
 
 
-%% SIMULATION
-
 %% State space model
 ftm.smu = ftm.smu - 1; %TODO: what is this? maybe give it a different name?
 state.As = diag(ftm.smu);
 state.Az = diag(exp(ftm.smu*T));
 state.C = ftm.primKern./ftm.nmu;
 state.Cw = state.C(1,:);
+
+%% Analyze Transfer Function
+% TF = ()
 
 %% Simulation time domain
 duration = Fs/10;
@@ -131,6 +143,6 @@ C = kern./ftm.nmu(mu).';
 % save('./data/room.mat','ftm','state','room','ybar','Fs')
 
 %% Animation
-figure(741); hold on
+figure(741);
 downsample = 1;
 animateSpaceAndTime(x, y, permute(C, [2,3,1]), ybar.', downsample)

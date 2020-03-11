@@ -28,5 +28,5 @@ K1 = @(x,y,mu) KX(x,y,ftm.lambdaX(mu), ftm.lambdaY(mu), ftm.smu(mu));
 KY = @(x,y,lx,ly,smu) -4.*ly./(smu.*room.rho).*cos(lx.*x).*sin(ly.*y);
 K2 = @(x,y,mu) KY(x,y,ftm.lambdaX(mu), ftm.lambdaY(mu), ftm.smu(mu));
 
-KZ = @(x,y,lx,ly) 4.*cos(lx.*x).*cos(ly.*y);
+KZ = @(x,y,lx,ly) 4.*cos(lx.*x).*cos(ly*y);
 K3 = @(x,y,mu) KZ(x,y,ftm.lambdaX(mu), ftm.lambdaY(mu));
