@@ -109,7 +109,7 @@ plotMatrix(clip(mag2db(abs(T12_(fInd,:))),[-50 10]));
 %% State space model
 ftm.smu = ftm.smu - 1; %TODO: what is this? maybe give it a different name?
 state.As = diag(ftm.smu);
-state.Az = diag(exp(ftm.smu*T));
+state.Az = diag(exp(ftm.smu*T)); % TODO: add damping term
 state.C = ftm.primKern./ftm.nmu;
 state.Cw = state.C(1,:);
 

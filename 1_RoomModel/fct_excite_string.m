@@ -41,7 +41,7 @@ for mu = 1:ftm.Mu
         foo = integral(@(xi) fun(xi,lx,ly, gnu),0, 1);
         vec(nu) = gamma*l*(-4/(room.rho*conj(ftm.smu(mu))))*...
             snu/gnu*1/s.ftm.nmu(nu)*foo;
-        % TODO: with or without conj?
+        
    end
    T12(mu,:) = vec; 
 end
