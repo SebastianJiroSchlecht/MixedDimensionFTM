@@ -46,7 +46,7 @@ pickup = 1/pi;   % pickup position, relevant for the eigenfunctions in K
 [ftm, state] = createModel(string, T, pickup);
 
 %% Create exciation functions
-[excite_imp, excite_ham] = createExcitations(ftm, string, len, t, T);
+[excite_imp, excite_ham] = createExcitations(ftm, string, len, t, 1/pi);
 
 %% SIMULATION - Time domain
 [ybar,y] = simulateTimeDomain(len,state.Az,state.C,excite_ham,T);

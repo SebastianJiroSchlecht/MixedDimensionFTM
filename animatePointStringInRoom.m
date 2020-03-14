@@ -1,4 +1,4 @@
-function  animateSpaceAndTime(x, y, space, time, downsample)
+function  animatePointStringInRoom(x, y, space, time, pos, defl, downsample)
 % Argument shape
 % space = [x,y,modes]
 % time = [time, modes]

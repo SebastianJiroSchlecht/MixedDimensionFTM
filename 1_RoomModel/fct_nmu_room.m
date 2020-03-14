@@ -1,6 +1,6 @@
 function nmu = fct_nmu_room(ftm, room) 
 
-nmu = zeros(1,ftm.Mu); 
+nmu = zeros(ftm.Mu,1); 
 
 
 for mu = 1:ftm.Mu 
@@ -13,5 +13,4 @@ for mu = 1:ftm.Mu
    i3 = 8/(room.rho*room.c0^2)*room.Lx*room.Ly;
    
    nmu(mu) = (i1+i2+i3);
-end
 end
