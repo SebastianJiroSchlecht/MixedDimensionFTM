@@ -37,5 +37,5 @@ state.Az = expm(state.As*T);
 
 state.C = ftm.kprim./ftm.nmu;
 state.Cs = @(xi,mu) ftm.Ks(xi,mu) ./ ftm.nmu(mu).';
-
+state.Cw = state.C(1,:);
 % Should be zero: ftm.Ks(x,1:120).' - ftm.kprim(1,:)

@@ -69,7 +69,8 @@ switch 'diracString'
         
     case 'string2'
         string = stringParameters();
-        [s.ftm, s.state] = createModel(string, T, 0.5);
+        stringPickupPosition = 1/pi; % TODO move to stringParameters
+        [s.ftm, s.state] = createModel(string, T, stringPickupPosition);
         
         %% Create exciation functions
         len = Fs * dur;
@@ -84,7 +85,8 @@ switch 'diracString'
         
     case 'diracString'
         string = stringParameters();
-        [s.ftm, s.state] = createModel(string, T, 0.5);
+        stringPickupPosition = 1/pi;
+        [s.ftm, s.state] = createModel(string, T, stringPickupPosition);
         
         %% Create exciation functions
         len = Fs * dur;
@@ -114,7 +116,29 @@ state.C = ftm.primKern./ftm.nmu;
 state.Cw = state.C(1,:);
 
 %% Analyze Transfer Function
-% TF = ()
+w = 1i*linspace(0,10000,1000);
+stringOut = 1./(w - diag(s.state.As));
+stringPickup = s.state.Cw * stringOut;
+roomIn = T12 * stringOut;
+roomOut = 1./(w - diag(state.As)) .* roomIn; 
+roomPickup = state.Cw * roomOut;
+
+% Transfer Functions
+figure(432); hold on;
+lin2dB = @(x) clip(mag2db(abs(x)),[-100 20]);
+plot(lin2dB(stringPickup))
+plot(lin2dB(roomPickup))
+xlabel('Frequency [s]')
+ylabel('Magnitude [dB]')
+legend({'String Pickup', 'Room Pickup'});
+
+% Relative Transfer Function
+figure(433); hold on; 
+lin2dB = @(x) clip(mag2db(abs(x)),[-100 200]);
+plot(lin2dB(roomPickup ./ stringPickup))
+xlabel('Frequency [s]')
+ylabel('Magnitude [dB]')
+legend({'Room - String Relative Transfer Function'});
 
 %% Simulation time domain
 duration = Fs/10;
