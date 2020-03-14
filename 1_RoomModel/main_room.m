@@ -2,14 +2,14 @@
 clear; clc; close all;
 
 %% Room model basics
-room.Lx = 6;
-room.Ly = 8;
+room.Lx = 8;
+room.Ly = 5;
 
 room.c0 = 340;
 room.rho = 1.2041;
 
-pickup.x = 9;
-pickup.y = 9;
+pickup.x = 1;
+pickup.y = 1;
 
 %% FTM Basics
 ftm.Mux = 50;                               % number of evs in x-direction
@@ -50,7 +50,8 @@ stringC = s.state.Cs(xi, 1:s.ftm.Mu);
 % Impulse excitation at string.mid
 init = ftm.primKern1(string.mid.x,string.mid.y, 1:ftm.Mu);
 
-switch 'diracString'
+sourceType = 'string';
+switch sourceType
     case 'dirac'
         % Impulse excitation at string.mid.
         excite(:,1) = init;
@@ -135,11 +136,26 @@ C = permute(C, [2,3,1]);
 % save('./data/room.mat','ftm','state','room','ybar','Fs')
 
 %% Animation
-figure(741);
+figure(741); hold on;
+set(gcf,'position',[808   546   896   391]);
 downsample = 1;
-animateSpaceAndTime(x, y, C, ybar.', downsample)
+wantToRecord = true;
 
 
+switch sourceType
+    case 'string'
+        gifName = 'animateSpaceAndTime.gif';
+        animate = @animateSpaceAndTime;
+    case 'diracString'
+        gifName = 'animatePointStringInRoom.gif';
+        animate = @animatePointStringInRoom;
+end
+        
+        
+if wantToRecord
+    gif(gifName,'frame',gcf);
+end
+animate(x, y, C, ybar.', string, s.y*30, downsample, wantToRecord)
 
 
 
