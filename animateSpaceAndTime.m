@@ -5,6 +5,8 @@ function  animateSpaceAndTime(x, y, space, time, downsample)
 % 
 % Sebastian J. Schlecht, Friday, 21 February 2020
 
+% TODO: add gif
+
 len = size(time,1);
 % time = permute(time,[3 4 2 1]);
 
