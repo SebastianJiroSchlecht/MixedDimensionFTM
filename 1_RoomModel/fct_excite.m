@@ -1,4 +1,4 @@
-function [excite] = fct_excite(ftm, T, exc)
+function [excite, init] = fct_excite(ftm, T, exc)
 
 % First create temporal exciation
 Tf = 1e-3; % Width of the temporal exciation

@@ -44,7 +44,13 @@ len = length(t);                       % Simulation duration
 exc.x = 2.5;
 exc.y = 1.8;
 
-switch 'diracString'
+% Impulse excitation at exc.
+mu = 1:ftm.Mu;
+lx = ftm.lambdaX(mu);
+ly = ftm.lambdaY(mu);
+init(mu) = cos(lx.*exc.x).*cos(ly.*exc.y);
+        
+switch 'string2'
     case 'dirac'
         % Impulse excitation at exc.
         mu = 1:ftm.Mu;
@@ -74,7 +80,7 @@ switch 'diracString'
         
         %% Create exciation functions
         len = Fs * dur;
-        [excite_imp, excite_ham] = createExcitations(s.ftm, string, len, t, T);
+        [excite_imp, excite_ham,Ks4_xe] = createExcitations(s.ftm, string, len, t, T);
         
         %% SIMULATION - Time domain
         [s.ybar,s.y] = simulateTimeDomain(len,s.state.Az,s.state.C,excite_ham,T);
@@ -90,7 +96,7 @@ switch 'diracString'
         
         %% Create exciation functions
         len = Fs * dur;
-        [excite_imp, excite_ham] = createExcitations(s.ftm, string, len, t, T);
+        [excite_imp, excite_ham, Ks4_xe] = createExcitations(s.ftm, string, len, t, T);
         
         %% SIMULATION - Time domain
         [s.ybar,s.y] = simulateTimeDomain(len,s.state.Az,s.state.C,excite_ham,T);
@@ -117,15 +123,17 @@ state.Cw = state.C(1,:);
 
 %% Analyze Transfer Function
 w = 1i*linspace(0,10000,1000);
-stringOut = 1./(w - diag(s.state.As));
+stringOut = 1./(w - diag(s.state.As)) .* Ks4_xe;
 stringPickup = s.state.Cw * stringOut;
 roomIn = T12 * stringOut;
 roomOut = 1./(w - diag(state.As)) .* roomIn; 
 roomPickup = state.Cw * roomOut;
 
+roomTFPoint = state.Cw * (1./(w - diag(state.As)) .* init.');
+
 % Transfer Functions
 figure(432); hold on;
-lin2dB = @(x) clip(mag2db(abs(x)),[-100 20]);
+lin2dB = @(x) clip(mag2db(abs(x)),[-100 40]);
 plot(lin2dB(stringPickup))
 plot(lin2dB(roomPickup))
 xlabel('Frequency [s]')
@@ -136,9 +144,10 @@ legend({'String Pickup', 'Room Pickup'});
 figure(433); hold on; 
 lin2dB = @(x) clip(mag2db(abs(x)),[-100 200]);
 plot(lin2dB(roomPickup ./ stringPickup))
+plot(lin2dB(roomTFPoint))
 xlabel('Frequency [s]')
 ylabel('Magnitude [dB]')
-legend({'Room - String Relative Transfer Function'});
+legend({'Room - String Relative Transfer Function', 'Room Point Transfer Function'});
 
 %% Simulation time domain
 duration = Fs/10;
