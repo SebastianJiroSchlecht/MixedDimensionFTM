@@ -60,8 +60,8 @@ wantToRecord = false;
 
 switch sourceType
     case 'string'
-        gifName = 'animateSpaceAndTime.gif';
-        animate = @animateSpaceAndTime;
+        gifName = 'animateStringInRoom.gif';
+        animate = @animateStringInRoom;
     case 'diracString'
         gifName = 'animatePointStringInRoom.gif';
         animate = @animatePointStringInRoom;

@@ -1,4 +1,4 @@
-function  animateSpaceAndTime(x, y, space, time, string, stringSpace, stringTime, downsample, wantToRecord)
+function  animateStringInRoom(x, y, space, time, string, stringSpace, stringTime, downsample, wantToRecord)
 % Argument shape
 % space = [x,y,modes]
 % time = [time, modes]

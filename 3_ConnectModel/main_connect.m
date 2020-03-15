@@ -52,4 +52,4 @@ C = kern./r.ftm.nmu(mu).';
 figure(741); hold on
 downsample = 1;
 deflection = 0;
-animateSpaceAndTime(x, y, permute(C, [2,3,1]), ybar.', downsample)
+animateStringInRoom(x, y, permute(C, [2,3,1]), ybar.', downsample)
