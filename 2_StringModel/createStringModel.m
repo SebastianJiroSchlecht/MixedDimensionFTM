@@ -30,7 +30,6 @@ ftm.gm = [ftm.gnu(:); ftm.gnu(:)];
 ftm.nmu = fct_nmu_string(ftm,string);
 
 %% state space description
-
 state.As = diag(ftm.smu);
 state.Az = expm(state.As*T);
 
@@ -38,3 +37,10 @@ state.C = ftm.kprim./ftm.nmu;
 state.Cs = @(xi,mu) ftm.Ks(xi,mu) ./ ftm.nmu(mu).';
 state.Cw = state.C(1,:);
 % Should be zero: ftm.Ks(x,1:120).' - ftm.kprim(1,:)
+
+%% create point excitation
+xe = string.l * string.excitePosition;
+state.Ks4_xe = ftm.gm .* sin(ftm.gm*xe);
+
+
+

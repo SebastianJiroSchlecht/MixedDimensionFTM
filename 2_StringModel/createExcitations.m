@@ -1,4 +1,4 @@
-function [excite_imp, excite_ham, Ks4_xe] = createExcitations(ftm, string, len, t, x)
+function [excite_imp, excite_ham] = createExcitations(ftm, string, len, t, x)
 
 %% Exciations
 f = -0.05/(string.E*string.I);
@@ -13,7 +13,6 @@ mu = 1:ftm.Mu;
 gm = ftm.gm(mu);
 excite_imp(mu,:) = gm .* sin(gm*xe)*fe;
 
-Ks4_xe = gm .* sin(gm*xe);
 
 %% 1+cos*hamming 
 Tf = 0.07e-3;
