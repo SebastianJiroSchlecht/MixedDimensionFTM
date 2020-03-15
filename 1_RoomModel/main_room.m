@@ -94,13 +94,14 @@ legend({'Room - String Relative Transfer Function', 'Room Point Transfer Functio
 
 xi = linspace(0,string.l,50);
 stringC = s.state.Cs(xi, 1:s.ftm.Mu);
-[s.ybar,s.y] = simulateTimeDomain(len,s.state.Az,stringC.',excite_ham,T);
+excite_ham = zeropad(excite_ham,len, 2);
+[s.ybar,s.y] = simulateTimeDomain(s.state.Az,stringC.',excite_ham,T);
 
 excite = T12*s.ybar;
 
 %% Simulation time domain
 duration = Fs/10;
-[ybar,w] = simulateTimeDomain(duration,state.Az,state.C,excite,T);
+[ybar,w] = simulateTimeDomain(state.Az,state.C,excite,T);
 
 %% Sound
 soundsc(w,Fs);

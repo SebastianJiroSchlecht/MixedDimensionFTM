@@ -1,11 +1,10 @@
-function [ybar,w] = simulateTimeDomain(duration,Az,Cw,excite,T)
+function [ybar,w] = simulateTimeDomain(Az,Cw,excite,T)
 
 Mu = size(Az,1);
 
-ybar = zeros(Mu,duration + size(excite,2) - 1);
+ybar = zeros(Mu,size(excite,2));
 for mu = 1:Mu
-    ir = impz(1,[1, -Az(mu,mu)],duration);
-    ybar(mu,:) = conv(ir,T*excite(mu,:));
+    ybar(mu,:) = filter(1,[1, -Az(mu,mu)],T*excite(mu,:));
 end
 w = Cw * ybar;
 w = real(w);
