@@ -52,11 +52,9 @@ roomC = r.ftm.primKern1(x, permute(y,[1 3 2]), 1:r.ftm.Mu) ./r.ftm.nmu ;
 roomC = permute(roomC, [2,3,1]);
 
 %% Animation
-figure(741); hold on;
-set(gcf,'position',[808   546   896   391]);
+figure(741); hold on; set(gcf,'position',[808   546   896   391]);
 downsample = 1;
 wantToRecord = false;
-
 
 switch sourceType
     case 'string'
