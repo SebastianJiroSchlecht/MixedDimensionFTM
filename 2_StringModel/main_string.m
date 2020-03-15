@@ -46,7 +46,7 @@ string = stringH;
 
 %% Create string Model
 pickup = 1/pi;   % pickup position, relevant for the eigenfunctions in K 
-[ftm, state] = createModel(string, T, pickup);
+[ftm, state] = createStringModel(string, T, pickup);
 
 %% Create exciation functions
 [excite_imp, excite_ham] = createExciations(ftm, string, len, t, T);

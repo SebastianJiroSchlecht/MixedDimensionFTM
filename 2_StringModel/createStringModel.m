@@ -1,7 +1,7 @@
-function [ftm, state] = createModel(string, T, x)
+function [ftm, state] = createStringModel(string, T)
 %% Eigenvalues 
 % Number of complex pairs 
-ftm.Nu = 10; % TODO: changed from 5
+ftm.Nu = 10; 
 ftm.nu = 1:ftm.Nu; 
 
 % Number of individual eigenvalues 
@@ -26,8 +26,7 @@ ftm.gm = [ftm.gnu(:); ftm.gnu(:)];
 % ftm.mu = 1:ftm.Mu;
 
 %% Eigenfunctions, Scaling 
-ftm.x = x;
-[ftm.kprim, ftm.kadj, ftm.Ks] = fct_eigenfunctions_string(string,ftm,ftm.x);
+[ftm.kprim, ftm.kadj, ftm.Ks] = fct_eigenfunctions_string(string,ftm,string.pickup);
 ftm.nmu = fct_nmu_string(ftm,string);
 
 %% state space description

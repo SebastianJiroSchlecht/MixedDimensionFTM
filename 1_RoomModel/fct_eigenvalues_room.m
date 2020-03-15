@@ -1,6 +1,8 @@
-function [smu, lambdaX, lambdaY] = fct_eigenvalues_room(ftm, index, room)
+function [smu, lambdaX, lambdaY, Mu] = fct_eigenvalues_room(ftm, room)
 % First only positive eigenvalues are calculated (see (8))
 % The complex conjugated are added at the end
+
+index = fct_index(ftm);
 
 lambdaX = zeros(1,ftm.Mux);
 lambdaY = zeros(1,ftm.Muy);
@@ -20,3 +22,5 @@ smu(mu) = 1j*room.c0*sqrt(lambdaX(mu).^2 + lambdaY(mu).^2);
 smu = [smu (conj(smu))];
 lambdaX = [lambdaX lambdaX];
 lambdaY = [lambdaY lambdaY];
+
+Mu = length(smu);
