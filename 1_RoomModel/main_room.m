@@ -54,7 +54,7 @@ roomC = permute(roomC, [2,3,1]);
 %% Animation
 figure(741); hold on; set(gcf,'position',[808   546   796   391],'color','w');
 downsample = 1;
-wantToRecord = true;
+wantToRecord = false;
 
 switch sourceType
     case 'string'
@@ -69,6 +69,8 @@ end
 if wantToRecord
     v = VideoWriter(videoName,'MPEG-4');
     open(v);
+else
+    v = [];
 end
 
 animate(x, y, roomC, r.ybar, string, stringC, s.ybar, downsample, wantToRecord, v)
