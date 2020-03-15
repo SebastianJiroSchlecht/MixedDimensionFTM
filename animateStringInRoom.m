@@ -1,4 +1,4 @@
-function  animateStringInRoom(x, y, space, time, string, stringSpace, stringTime, downsample, wantToRecord)
+function  animateStringInRoom(x, y, space, time, string, stringSpace, stringTime, downsample, wantToRecord, v)
 % Argument shape
 % space = [x,y,modes]
 % time = [time, modes]
@@ -25,11 +25,11 @@ shading interp;
 colorbar
 caxis([-1 1])
 
-
+%% Animate
 len = size(time,2);
 visualAmplification = 30;
 for k = 1:downsample:len
-    
+    disp(k)
     t = permute(time(:,k),[3 4 1 2]);
     d = sum(space .* t, 3);
     set(h, 'ZData', real(d).' );
@@ -38,10 +38,10 @@ for k = 1:downsample:len
     set(s, 'XData', sx + snull(1) * defl,...
            'YData', sy + snull(2) * defl);
        
-    %% For ploting
-    pause(0.1)
     if wantToRecord
-        gif
+        frame = getframe(gcf);
+        writeVideo(v,frame);
+    else
+        pause(0.1)
     end
 end
-

@@ -1,4 +1,4 @@
-function  animatePointStringInRoom(x, y, space, time, string, stringSpace, stringTime, downsample, wantToRecord)
+function  animatePointStringInRoom(x, y, space, time, string, stringSpace, stringTime, downsample, wantToRecord, v)
 % Argument shape
 % space = [x,y,modes]
 % time = [time, modes]
@@ -41,10 +41,11 @@ for k = 1:downsample:len
 
     defl = stringSpace * stringTime(:,k) * visualAmplification; 
     set(s, 'XData', real(defl));
-    %% For ploting
-    pause(0.1)
+    
     if wantToRecord
-        gif
+        frame = getframe(gcf);
+        writeVideo(v,frame);
+    else
+        pause(0.1)
     end
 end
-

@@ -4,7 +4,7 @@ clear; clc; close all;
 %% Simulation Basics
 Fs = 44.1e3;                           % Sampling frequency
 T = (1/Fs);                            % Samplig Time
-dur = 0.2;                             % Duration  
+dur = 0.02;                             % Duration  
 t = 0:T:dur-T;                         % Time vector
 len = length(t);                       % Simulation duration
 
@@ -20,7 +20,7 @@ sourceType = 'string';
 switch sourceType
     case 'string'
         T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
-    case 'diracString'
+    case 'point'
         T12 = connectPointModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K3, s.ftm.Mu, r.ftm.Mu);
 end
 
@@ -52,25 +52,29 @@ roomC = r.ftm.primKern1(x, permute(y,[1 3 2]), 1:r.ftm.Mu) ./r.ftm.nmu ;
 roomC = permute(roomC, [2,3,1]);
 
 %% Animation
-figure(741); hold on; set(gcf,'position',[808   546   896   391]);
+figure(741); hold on; set(gcf,'position',[808   546   796   391],'color','w');
 downsample = 1;
-wantToRecord = false;
+wantToRecord = true;
 
 switch sourceType
     case 'string'
-        gifName = 'animateStringInRoom.gif';
+        videoName = 'animateStringInRoom';
         animate = @animateStringInRoom;
-    case 'diracString'
-        gifName = 'animatePointStringInRoom.gif';
+    case 'point'
+        videoName = 'animatePointStringInRoom';
         animate = @animatePointStringInRoom;
 end
         
         
 if wantToRecord
-    gif(gifName,'frame',gcf);
+    v = VideoWriter(videoName,'MPEG-4');
+    open(v);
 end
-animate(x, y, roomC, r.ybar, string, stringC, s.ybar, downsample, wantToRecord)
 
+animate(x, y, roomC, r.ybar, string, stringC, s.ybar, downsample, wantToRecord, v)
 
+if wantToRecord
+   close(v); 
+end
 
 
