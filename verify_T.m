@@ -12,7 +12,7 @@ pos = [r.ftm.x(0), r.ftm.y(0); r.ftm.x(1), r.ftm.y(1)];
 [excite,T12] = fct_excite_string(r.ftm, r.room, s, pos);
 
 %% Version 2
-T12_ = connectModels(r.ftm.x, r.ftm.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
+T12_ = connectStringModel(r.ftm.x, r.ftm.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
 
 
 %%

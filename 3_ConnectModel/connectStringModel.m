@@ -1,4 +1,4 @@
-function T = connectModels(x, y, Ks, nums, K1, K2, MuS, MuR)
+function T = connectStringModel(x, y, Ks, nums, K1, K2, MuS, MuR)
 
 T = zeros(MuR,MuS);
 
