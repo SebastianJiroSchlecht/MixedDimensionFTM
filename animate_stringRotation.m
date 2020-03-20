@@ -33,8 +33,7 @@ end
 stringAngle = linspace(0,2*pi,500);
 
 for it = 1:length(stringAngle)
-    it
-    
+    fprintf('Frame %d / %d\n', it, length(stringAngle));
     
     subplot('Position',[0.1 0.1 0.8 0.5])
     [stringA,T12] = plotT12(stringAngle(it), string, s,r);
@@ -46,8 +45,7 @@ for it = 1:length(stringAngle)
     plot(stringA.x([0 1]), stringA.y([0 1]),'r','LineWidth', 3);
     xlim([1 3]);
     ylim([2 4]);
-    
-    
+    grid on;
     
     if wantToRecord
         frame = getframe(gcf);
@@ -65,19 +63,8 @@ end
 
 function [string, T12] = plotT12(stringAngle, string, s,r)
 %% Position
-% stringAngle = 0.1 * pi;
-[sx,sy] = pol2cart(stringAngle, string.l);
-
 stringOrigin = [2; 3];
-
-excite_pos = stringOrigin + [0 sx; 0 sy];
-
-string.x = @(xi) excite_pos(1,1) + xi*( excite_pos(1,2) - excite_pos(1,1));
-string.y = @(xi) excite_pos(2,1) + xi*( excite_pos(2,2) - excite_pos(2,1));
-
-string.mid.x = string.x(0.5);
-string.mid.y = string.y(0.5);
-string.l = norm([string.x(0) - string.x(1); string.y(0) - string.y(1)]);
+string = setStringPosition(string, string.l, stringAngle, stringOrigin);
 
 %% Connect Models
 T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
@@ -86,7 +73,6 @@ T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ft
 [f,fInd] = sort(imag(r.ftm.smu(1:end/2)),'ascend');
 T12_ = T12(1:end/2,1:end/2);
 
-% figure(152);
 plotMatrix(clip(mag2db(abs(T12_(fInd,:))),[-50 20]));
 xticklabels(round(imag(s.ftm.smu)));
 yticks((1:100:length(f))+0.5)
@@ -110,18 +96,14 @@ roomIn = T12 * stringOut;
 roomOut = 1./(w - diag(r.state.As)) .* roomIn;
 roomPickup = r.state.C * roomOut;
 
-% Impulse excitation at string.mid
-% init = r.ftm.primKern1(string.mid.x,string.mid.y, 1:r.ftm.Mu);
-% roomTFPoint = r.state.C * (1./(w - diag(r.state.As)) .* init);
-
 % Transfer Functions
-% figure(432); hold on;
 lin2dB = @(x) clip(mag2db(abs(x)),[-100 80]);
 plot(imag(w),lin2dB(stringPickup)); hold on;
 plot(imag(w),lin2dB(roomPickup)); hold off;
 xlabel('Frequency [Hz]')
 ylabel('Magnitude [dB]')
 ylim([-100 60]);
+grid on;
 % legend({'String Pickup', 'Room Pickup'},'Location','NorthOutside');
 end
 
