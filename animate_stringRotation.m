@@ -70,11 +70,11 @@ string = setStringPosition(string, string.l, stringAngle, stringOrigin);
 T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
 
 %% Analyze T12
-[f,fInd] = sort(imag(r.ftm.smu(1:end/2)),'ascend');
-T12_ = T12(1:end/2,1:end/2);
+[f,fInd] = sort(s2f(r.ftm.smu(1:end/2)),'ascend');
+T12_ = T12(1:end/2,1:end/2); % TODO: frequency stuff
 
 plotMatrix(clip(mag2db(abs(T12_(fInd,:))),[-50 20]));
-xticklabels(round(imag(s.ftm.smu)));
+xticklabels(round(s2f(s.ftm.smu)));
 yticks((1:100:length(f))+0.5)
 yticklabels(round(f(1:100:end)));
 % title(['String Rotation: ' num2str(stringAngle/pi)])
@@ -98,8 +98,8 @@ roomPickup = r.state.C * roomOut;
 
 % Transfer Functions
 lin2dB = @(x) clip(mag2db(abs(x)),[-100 80]);
-plot(imag(w),lin2dB(stringPickup)); hold on;
-plot(imag(w),lin2dB(roomPickup)); hold off;
+plot(s2f(w),lin2dB(stringPickup)); hold on;
+plot(s2f(w),lin2dB(roomPickup)); hold off;
 xlabel('Frequency [Hz]')
 ylabel('Magnitude [dB]')
 ylim([-100 60]);

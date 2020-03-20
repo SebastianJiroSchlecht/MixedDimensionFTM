@@ -10,7 +10,7 @@ sp1 = subplot(1,2,1); hold on;
 set(sp1,'position', [0.1 0.2 0.1 0.6])
 
 snum = size(stringSpace,1);
-s = plot(zeros(snum,1),linspace(0,string.l,snum),'r','LineWidth',3);
+s = plot(zeros(snum,1),linspace(0,string.l,snum),'r','LineWidth',1);
 plot([-10,10],[1 1]*string.pickup,'--k');
 xlabel('Deflection');
 ylabel('Space');

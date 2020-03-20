@@ -1,17 +1,27 @@
-function plotTransferFunction(T12,s,r,string)
+function plotTransferFunction(T12,s,r,string,shouldSave,saveString)
 
 %% Analyze T12
-[f,fInd] = sort(imag(r.ftm.smu(1:end/2)),'ascend');
+[f,fInd] = sort(s2f(r.ftm.smu(1:end/2)),'ascend');
 T12_ = T12(1:end/2,1:end/2);
 
+reduceIndex = 1:3:length(fInd); % TODO reduce factor
+
 figure(152);
-plotMatrix(clip(mag2db(abs(T12_(fInd,:))),[-50 10]));
-xticklabels(round(imag(s.ftm.smu)));
-yticks((1:100:length(f))+0.5)
-yticklabels(round(f(1:100:end)));
+plotMatrix(clip(mag2db(abs(T12_(fInd(reduceIndex),:))),[-50 10]));
+xticks((1:length(s.ftm.smu(1:end/2)))+0.5)
+xticklabels(round(s2f(s.ftm.smu(1:end/2))));
+yticks((1:100:length(f(reduceIndex)))+0.5)
+yticklabels(round(f(reduceIndex(1:100:end))));
 xlabel('String Frequency [Hz]')
 ylabel('Room Frequency [Hz]')
-axis tight
+axis tight;
+
+
+if shouldSave
+   options = {'xticklabel style={rotate=90}'};
+   matlab2tikz_sjs(['./plot/ConnectionMatrix_' saveString '.tikz'],'height','11.6cm','width','3cm','extraAxisOptions',options);
+end
+
 
 %% Plot Transfer Function
 w = 1i*linspace(0,10000,1000);
@@ -26,19 +36,29 @@ init = r.ftm.primKern1(string.mid.x,string.mid.y, 1:r.ftm.Mu);
 roomTFPoint = r.state.C * (1./(w - diag(r.state.As)) .* init);
 
 % Transfer Functions
-figure(432); hold on;
+figure(432); hold on; grid on;
 lin2dB = @(x) clip(mag2db(abs(x)),[-100 40]);
-plot(lin2dB(stringPickup))
-plot(lin2dB(roomPickup))
+plot(s2f(w),lin2dB(stringPickup))
+plot(s2f(w),lin2dB(roomPickup))
 xlabel('Frequency [s]')
 ylabel('Magnitude [dB]')
-legend({'String Pickup', 'Room Pickup'});
+legend({'String Pickup', 'Room Pickup'},'Location','SouthEast');
+
+
+if shouldSave
+   matlab2tikz_sjs(['./plot/TransferFunction_' saveString '.tikz'],'height','3.0cm');
+end
+
 
 % Relative Transfer Function
-figure(433); hold on;
+figure(433); hold on; grid on;
 lin2dB = @(x) clip(mag2db(abs(x)),[-100 200]);
-plot(lin2dB(roomPickup ./ stringPickup))
-plot(lin2dB(roomTFPoint))
+plot(s2f(w),lin2dB(roomPickup ./ stringPickup))
+plot(s2f(w),lin2dB(roomTFPoint))
 xlabel('Frequency [s]')
 ylabel('Magnitude [dB]')
-legend({'Room - String Relative Transfer Function', 'Room Point Transfer Function'});
+legend({'Room to String Relative Transfer Function', 'Room to Point Relative Transfer Function'},'Location','SouthEast');
+
+if shouldSave
+   matlab2tikz_sjs(['./plot/Relative_TransferFunction_' saveString '.tikz'],'height','3.0cm');
+end

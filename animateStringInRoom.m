@@ -5,15 +5,6 @@ function  animateStringInRoom(x, y, space, time, string, stringSpace, stringTime
 % 
 % Sebastian J. Schlecht, Friday, 21 February 2020
 
-
-%% String plot
-svec = [string.x(1) - string.x(0), string.y(1) - string.y(0)] ;
-snull = -null(svec);
-snum = size(stringSpace,1);
-sx = string.x(linspace(0,1,snum)).';
-sy = string.y(linspace(0,1,snum)).';
-s = plot3(sx,sy,ones(snum,1)*10,'r','LineWidth',3);
-
 %% Room Plot
 h = surf(x, y, zeros(length(y),length(x)),'edgecolor','none');
 
@@ -24,6 +15,14 @@ set(gca,'DataAspectRatio',[1 1 1])
 shading interp;
 colorbar
 caxis([-1 1])
+
+%% String plot
+svec = [string.x(1) - string.x(0), string.y(1) - string.y(0)] ;
+snull = -null(svec);
+snum = size(stringSpace,1);
+sx = string.x(linspace(0,1,snum)).';
+sy = string.y(linspace(0,1,snum)).';
+s = plot3(sx,sy,ones(snum,1)*10,'r','LineWidth',1);
 
 %% Animate
 len = size(time,2);

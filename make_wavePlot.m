@@ -16,7 +16,7 @@ len = length(t);                       % Simulation duration
 string = stringParameters();
 [s.ftm, s.state] = createStringModel(string, T);
         
-sourceType = 'string';
+sourceType = 'point';
 switch sourceType
     case 'string'
         T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
@@ -25,7 +25,7 @@ switch sourceType
 end
 
 %% Analyze Transfer Function
-plotTransferFunction(T12,s,r,string,false)
+% plotTransferFunction(T12,s,r,string,false)
 
 %% SIMULATION - Time domain
 %% String - Create exciation functions
@@ -37,7 +37,7 @@ excite = T12*s.ybar;
 [r.ybar,r.y] = simulateTimeDomain(r.state.Az,r.state.C,excite,T);
 
 %% Sound
-soundsc(r.y,Fs);
+% soundsc(r.y,Fs);
 
 %% Spatial simulation
 % String
@@ -46,7 +46,7 @@ stringC = s.state.Cs(xi, 1:s.ftm.Mu).';
 
 % Room
 x = linspace(0,room.Lx,100);
-y = linspace(0,room.Ly,100);
+y = linspace(0,room.Ly,50);
 roomC = r.ftm.primKern1(x, permute(y,[1 3 2]), 1:r.ftm.Mu) ./r.ftm.nmu ;
 roomC = permute(roomC, [2,3,1]);
 
@@ -64,18 +64,11 @@ switch sourceType
         animate = @animatePointStringInRoom;
 end
         
-        
-if wantToRecord
-    v = VideoWriter(videoName,'MPEG-4');
-    open(v);
-else
-    v = [];
-end
+v = [];
+timeIndex = 350;        
+animate(x, y, roomC, r.ybar(:,timeIndex), string, stringC, s.ybar(:,timeIndex), downsample, wantToRecord, v)
 
-animate(x, y, roomC, r.ybar, string, stringC, s.ybar, downsample, wantToRecord, v)
-
-if wantToRecord
-   close(v); 
-end
+%% Save Plot
+matlab2tikz_sjs(['./plot/wavePlot_' sourceType '.tikz']);
 
 

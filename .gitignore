@@ -5,3 +5,6 @@
 *.png
 *.mp4
 *.m4a
+plot/.texpadtmp/
+*.pdf
+*.tikz
