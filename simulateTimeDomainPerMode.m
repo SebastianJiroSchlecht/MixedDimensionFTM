@@ -1,4 +1,7 @@
 function [ybar,w] = simulateTimeDomainPerMode(Az,Cw,T12, excite,T)
+% Sebastian J. Schlecht, Friday, 20 March 2020
+% Low Memory version
+
 ybar = 0;
 
 Mu = size(Az,1);
