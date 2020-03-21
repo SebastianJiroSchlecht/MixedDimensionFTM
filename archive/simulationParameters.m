@@ -1,4 +1,5 @@
 function sim = simulationParameters()
+% TODO
 
 sim.Fs = 48000;
 sim.T = 1/Fs;

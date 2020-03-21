@@ -4,6 +4,10 @@
 
 startup
 
-main_room
-main_string
-main_connect
+% main_room
+% main_string
+% main_connect
+
+make_connectionPlot
+make_soundExample
+make_wavePlot
