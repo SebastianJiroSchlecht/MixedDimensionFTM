@@ -12,5 +12,13 @@ make_stringAnimation
 make_connectionPlot
 make_soundExample
 make_wavePlot
-make_waveAnimation
+
 make_stringRotationAnimation
+
+sourceType = 'string';
+make_waveAnimation
+
+sourceType = 'point';
+make_waveAnimation
+
+

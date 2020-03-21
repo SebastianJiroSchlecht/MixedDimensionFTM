@@ -1,5 +1,6 @@
 %% Make room animation
-clear; clc; close all;
+close all;
+% sourceType = 'string';
 
 %% Simulation Basics
 [Fs,T,dur,t,len] = simulationParameters(0.01);

@@ -18,27 +18,27 @@ figure(741); set(gcf,'position',[808   546   800   800],'color','w');
 downsample = 1;
 wantToRecord = true;
 videoName = 'animateStringInRoom_rotation';
-
-
-% TODO: standardize this
-if wantToRecord
-    v = VideoWriter(videoName,'MPEG-4');
-    open(v);
-else
-    v = [];
-end
-
 stringAngle = linspace(0,2*pi,500);
+
+recordVideo(wantToRecord, videoName, @(w,v) animateConnection(stringAngle, string, s, r, w, v) );
+
+
+
+
+function animateConnection(stringAngle, string, s, r, wantToRecord, v)
 
 for it = 1:length(stringAngle)
     fprintf('Frame %d / %d\n', it, length(stringAngle));
     
+    % Connection Matrix
     subplot('Position',[0.1 0.1 0.8 0.5])
     [stringA,T12] = plotT12(stringAngle(it), string, s,r);
     
+    % Transfer function
     subplot('Position',[0.3 0.7 0.6 0.2])
     plotTF(T12,s,r);
     
+    % String
     subplot('Position',[0.1 0.75 0.1 0.1])
     plot(stringA.x([0 1]), stringA.y([0 1]),'r','LineWidth', 3);
     xlim([1 3]);
@@ -53,9 +53,8 @@ for it = 1:length(stringAngle)
     end
 end
 
-if wantToRecord
-    close(v);
 end
+
 
 
 
@@ -82,6 +81,8 @@ axis tight
 colorbar
 caxis([-50 20])
 end
+
+
 
 
 function plotTF(T12,s,r)
