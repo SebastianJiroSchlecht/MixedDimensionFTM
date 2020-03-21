@@ -16,7 +16,7 @@ len = length(t);                       % Simulation duration
 string = stringParameters();
 [s.ftm, s.state] = createStringModel(string, T);
         
-sourceType = 'string';
+sourceType = 'stringOrth';
 switch sourceType
     case 'string'
         string = stringParameters();

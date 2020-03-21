@@ -4,14 +4,13 @@ function plotTransferFunction(T12,s,r,string,shouldSave,saveString)
 [f,fInd] = sort(s2f(r.ftm.smu(1:end/2)),'ascend');
 T12_ = T12(1:end/2,1:end/2);
 
-reduceIndex = 1:3:length(fInd); % TODO reduce factor
 
 figure(152);
-plotMatrix(clip(mag2db(abs(T12_(fInd(reduceIndex),:))),[-50 10]));
+plotMatrix(clip(mag2db(abs(T12_(fInd,:))),[-50 10]));
 xticks((1:length(s.ftm.smu(1:end/2)))+0.5)
 xticklabels(round(s2f(s.ftm.smu(1:end/2))));
-yticks((1:100:length(f(reduceIndex)))+0.5)
-yticklabels(round(f(reduceIndex(1:100:end))));
+yticks((1:100:length(f))+0.5)
+yticklabels(round(f(1:100:end)));
 xlabel('String Frequency [Hz]')
 ylabel('Room Frequency [Hz]')
 axis tight;

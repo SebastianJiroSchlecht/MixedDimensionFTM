@@ -16,7 +16,7 @@ len = length(t);                       % Simulation duration
 string = stringParameters();
 [s.ftm, s.state] = createStringModel(string, T);
         
-sourceType = 'point';
+sourceType = 'string';
 switch sourceType
     case 'string'
         T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
@@ -45,8 +45,8 @@ xi = linspace(0,string.l,50);
 stringC = s.state.Cs(xi, 1:s.ftm.Mu).';
 
 % Room
-x = linspace(0,room.Lx,100);
-y = linspace(0,room.Ly,50);
+x = linspace(0,room.Lx,200);
+y = linspace(0,room.Ly,200);
 roomC = r.ftm.primKern1(x, permute(y,[1 3 2]), 1:r.ftm.Mu) ./r.ftm.nmu ;
 roomC = permute(roomC, [2,3,1]);
 

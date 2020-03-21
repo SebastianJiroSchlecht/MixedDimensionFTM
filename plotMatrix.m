@@ -8,7 +8,7 @@ AA = zeros( size(A) + 1 );
 AA(1:end-1, 1:end-1) = A;
 
 
-surf(AA,'EdgeAlpha',0); % 'edgecolor','none'
+surf(AA,'edgecolor','none'); % 'EdgeAlpha',0
 view([0 90])
 
 xticks((1:N)+0.5)
