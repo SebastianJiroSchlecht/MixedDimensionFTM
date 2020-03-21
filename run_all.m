@@ -8,6 +8,8 @@ startup
 % main_string
 % main_connect
 
+make_stringAnimation
 make_connectionPlot
 make_soundExample
 make_wavePlot
+make_waveAnimation

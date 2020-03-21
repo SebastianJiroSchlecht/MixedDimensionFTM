@@ -34,7 +34,8 @@ caxis([-1 1])
 len = size(time,2);
 visualAmplification = 30;
 for k = 1:downsample:len
-    disp(k)
+    fprintf('Frame %d / %d\n', k, len);
+    
     t = permute(time(:,k),[3 4 1 2]);
     d = sum(space .* t, 3);
     set(h, 'ZData', real(d).' );

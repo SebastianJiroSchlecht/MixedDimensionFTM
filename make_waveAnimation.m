@@ -1,12 +1,8 @@
-%% Include directories
+%% Make room animation
 clear; clc; close all;
 
 %% Simulation Basics
-Fs = 44.1e3;                           % Sampling frequency
-T = (1/Fs);                            % Samplig Time
-dur = 0.02;                             % Duration  
-t = 0:T:dur-T;                         % Time vector
-len = length(t);                       % Simulation duration
+[Fs,T,dur,t,len] = simulationParameters(0.01);
 
 %% Room model
 [room,r.ftm] = roomParameters();
@@ -27,6 +23,8 @@ end
 %% Analyze Transfer Function
 plotTransferFunction(T12,s,r,string,false)
 
+
+
 %% SIMULATION - Time domain
 %% String - Create exciation functions
 [excite_imp, excite_ham] = createExcitations(s.ftm, string, len, t, string.excitePosition);
@@ -37,7 +35,7 @@ excite = T12*s.ybar;
 [r.ybar,r.y] = simulateTimeDomain(r.state.Az,r.state.C,excite,T);
 
 %% Sound
-soundsc(r.y,Fs);
+% soundsc(r.y,Fs);
 
 %% Spatial simulation
 % String
@@ -64,18 +62,8 @@ switch sourceType
         animate = @animatePointStringInRoom;
 end
         
-        
-if wantToRecord
-    v = VideoWriter(videoName,'MPEG-4');
-    open(v);
-else
-    v = [];
-end
+recordVideo(wantToRecord, videoName, @(w,v) animate(x, y, roomC, r.ybar, string, stringC, s.ybar, downsample, w, v) )
 
-animate(x, y, roomC, r.ybar, string, stringC, s.ybar, downsample, wantToRecord, v)
 
-if wantToRecord
-   close(v); 
-end
 
 

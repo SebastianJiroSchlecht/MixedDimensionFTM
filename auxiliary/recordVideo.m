@@ -1,4 +1,6 @@
 function recordVideo(wantToRecord, videoName, func)
+% Wrapper function for recording animation videos
+%
 % Sebastian J. Schlecht, Saturday, 21 March 2020
 
 if wantToRecord
