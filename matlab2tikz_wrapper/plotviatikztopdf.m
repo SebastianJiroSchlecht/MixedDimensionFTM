@@ -10,6 +10,13 @@ function plotviatikztopdf(filename,varargin)
 
 % May be required
 % setenv('PATH', [getenv('PATH') ':/usr/local/texlive/2019/bin/x86_64-darwin']);
+%
+% More memory/Add to /usr/local/texlive/2019/texmf.cnf
+% 
+% main_memory = 7000000 
+% extra_mem_top.pdflatex = 200000000
+% extra_mem_bot.pdflatex = 400000000
+
 
 % strip file ending
 [filepath,name,ext] = fileparts(filename);
