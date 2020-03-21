@@ -1,5 +1,7 @@
 function plotTransferFunction(T12,s,r,string,shouldSave,saveString)
 
+% TODO: clean up
+
 %% Analyze T12
 [f,fInd] = sort(s2f(r.ftm.smu(1:end/2)),'ascend');
 T12_ = T12(1:end/2,1:end/2);

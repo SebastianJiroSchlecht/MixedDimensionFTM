@@ -19,6 +19,8 @@ downsample = 1;
 wantToRecord = true;
 videoName = 'animateStringInRoom_rotation';
 
+
+% TODO: standardize this
 if wantToRecord
     v = VideoWriter(videoName,'MPEG-4');
     open(v);
