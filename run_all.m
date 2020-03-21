@@ -2,6 +2,8 @@
 %
 % run all experiments
 
+tic
+
 startup
 
 make_stringAnimation
@@ -29,4 +31,4 @@ make_waveAnimation
 sourceType = 'point';
 make_waveAnimation
 
-
+toc
