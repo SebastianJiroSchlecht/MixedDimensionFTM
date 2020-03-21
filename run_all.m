@@ -25,7 +25,7 @@ make_connectionPlot
 sourceType = 'point';
 make_connectionPlot
 
-
+%% wave animation
 sourceType = 'string';
 make_waveAnimation
 

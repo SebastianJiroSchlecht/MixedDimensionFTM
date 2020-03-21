@@ -13,7 +13,6 @@ close all;
 string = stringParameters();
 [s.ftm, s.state] = createStringModel(string, T);
         
-sourceType = 'string';
 switch sourceType
     case 'string'
         T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);

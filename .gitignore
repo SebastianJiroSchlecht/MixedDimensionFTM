@@ -8,3 +8,6 @@
 plot/.texpadtmp/
 *.pdf
 *.tikz
+*.wav
+*.aux
+*.log
