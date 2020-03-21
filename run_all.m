@@ -4,16 +4,24 @@
 
 startup
 
-% main_room
-% main_string
-% main_connect
-
 make_stringAnimation
-make_connectionPlot
-make_soundExample
-make_wavePlot
-
 make_stringRotationAnimation
+
+sourceType = 'string';
+make_soundExample
+
+sourceType = 'point';
+make_soundExample
+
+sourceType = 'stringOrth';
+make_connectionPlot
+
+sourceType = 'string';
+make_connectionPlot
+
+sourceType = 'point';
+make_connectionPlot
+
 
 sourceType = 'string';
 make_waveAnimation

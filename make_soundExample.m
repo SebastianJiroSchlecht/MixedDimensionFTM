@@ -1,7 +1,6 @@
 % Sebastian J. Schlecht, Friday, 20 March 2020
-
-%% Include directories
-clear; clc; close all;
+close all;
+% sourceType = 'string';
 
 %% Simulation Basics
 [Fs,T,dur,t,len] = simulationParameters(10);
@@ -14,7 +13,7 @@ clear; clc; close all;
 string = stringParameters();
 [s.ftm, s.state] = createStringModel(string, T);
         
-sourceType = 'string';
+
 switch sourceType
     case 'string'
         T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
@@ -36,7 +35,7 @@ soundsc(r.y,Fs);
 % soundsc(s.y(1,:),Fs);
 
 %% Save
-audiowrite(['./data/' sourceType 'InRoom.wav'],rescale(r.y,-.99,.99),Fs);
-audiowrite(['./data/' 'stringOnly.wav'],rescale(s.y(1,:),-.99,.99),Fs);
+audiowrite(['./data/' sourceType 'InRoom.wav'],rescale(r.y,-.9,.9),Fs);
+audiowrite(['./data/' 'stringOnly.wav'],rescale(s.y(1,:),-.9,.9),Fs);
 
 

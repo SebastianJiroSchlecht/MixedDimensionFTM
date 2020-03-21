@@ -1,5 +1,6 @@
 %% Include directories
-clear; clc; close all;
+close all;
+% sourceType = 'stringOrth';
 
 %% Simulation Basics
 [Fs,T,dur,t,len] = simulationParameters(0.02);
@@ -12,7 +13,7 @@ clear; clc; close all;
 string = stringParameters();
 [s.ftm, s.state] = createStringModel(string, T);
         
-sourceType = 'stringOrth';
+
 switch sourceType
     case 'string'
         string = stringParameters();
