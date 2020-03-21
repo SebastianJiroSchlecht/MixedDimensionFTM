@@ -1,6 +1,6 @@
 function T = connectStringModel(x, y, Ks, nums, K1, K2, MuS, MuR)
 
-gamma = 1e3; % TODO: to be defined
+gamma = 1e3; 
 
 stringPosition = [x(1) - x(0), y(1) - y(0)];
 l = norm(stringPosition);

@@ -71,7 +71,7 @@ T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ft
 
 %% Analyze T12
 [f,fInd] = sort(s2f(r.ftm.smu(1:end/2)),'ascend');
-T12_ = T12(1:end/2,1:end/2); % TODO: frequency stuff
+T12_ = T12(1:end/2,1:end/2);
 
 plotMatrix(clip(mag2db(abs(T12_(fInd,:))),[-50 20]));
 xticklabels(round(s2f(s.ftm.smu)));
