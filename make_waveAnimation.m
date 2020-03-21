@@ -21,7 +21,7 @@ switch sourceType
 end
 
 %% Analyze Transfer Function
-plotTransferFunction(T12,s,r,string,false)
+% plotTransferFunction(T12,s,r,string,false)
 
 
 
@@ -43,15 +43,16 @@ xi = linspace(0,string.l,50);
 stringC = s.state.Cs(xi, 1:s.ftm.Mu).';
 
 % Room
-x = linspace(0,room.Lx,100);
-y = linspace(0,room.Ly,100);
+x = linspace(0,room.Lx,200);
+y = linspace(0,room.Ly,200);
 roomC = r.ftm.primKern1(x, permute(y,[1 3 2]), 1:r.ftm.Mu) ./r.ftm.nmu ;
 roomC = permute(roomC, [2,3,1]);
 
-%% Animation
-figure(741); hold on; set(gcf,'position',[808   546   796   391],'color','w');
+
+%% Plot Parameters
 downsample = 1;
-wantToRecord = false;
+wantToRecord = true;
+v = [];
 
 switch sourceType
     case 'string'
@@ -61,8 +62,18 @@ switch sourceType
         videoName = 'animatePointStringInRoom';
         animate = @animatePointStringInRoom;
 end
-        
+
+%% Plot 
+figure(742); hold on; set(gcf,'position',[808   546   796   391],'color','w');
+timeIndex = 350;        
+animate(x, y, roomC, r.ybar(:,timeIndex), string, stringC, s.ybar(:,timeIndex), downsample, false, v)
+matlab2tikz_sjs(['./plot/wavePlot_' sourceType '.tikz']);
+
+%% Animation
+figure(741); hold on; set(gcf,'position',[808   546   796   391],'color','w');
 recordVideo(wantToRecord, videoName, @(w,v) animate(x, y, roomC, r.ybar, string, stringC, s.ybar, downsample, w, v) )
+
+
 
 
 
