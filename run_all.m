@@ -13,3 +13,4 @@ make_connectionPlot
 make_soundExample
 make_wavePlot
 make_waveAnimation
+make_stringRotationAnimation

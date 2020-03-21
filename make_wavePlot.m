@@ -2,11 +2,7 @@
 clear; clc; close all;
 
 %% Simulation Basics
-Fs = 44.1e3;                           % Sampling frequency
-T = (1/Fs);                            % Samplig Time
-dur = 0.02;                             % Duration  
-t = 0:T:dur-T;                         % Time vector
-len = length(t);                       % Simulation duration
+[Fs,T,dur,t,len] = simulationParameters(0.02);
 
 %% Room model
 [room,r.ftm] = roomParameters();
