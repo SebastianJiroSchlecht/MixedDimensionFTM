@@ -3,10 +3,12 @@ function string = setStringPosition(string, stringLength, stringAngle, stringOri
 
 [sx,sy] = pol2cart(stringAngle, stringLength);
 
-excite_pos = stringOrigin + [0 sx; 0 sy];
+string.origin = stringOrigin;
+excite_pos = string.origin + [0 sx; 0 sy];
 
 string.x = @(xi) excite_pos(1,1) + xi*( excite_pos(1,2) - excite_pos(1,1));
 string.y = @(xi) excite_pos(2,1) + xi*( excite_pos(2,2) - excite_pos(2,1));
+
 
 string.mid.x = string.x(0.5);
 string.mid.y = string.y(0.5);

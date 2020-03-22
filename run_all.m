@@ -9,13 +9,17 @@ startup
 make_stringAnimation
 make_stringRotationAnimation
 
-sourceType = 'string';
-make_soundExample
+%% sound examples
+for position = 1:17
+    sourceType = 'string';
+    make_soundExample
+end
 
+position = 1;
 sourceType = 'point';
 make_soundExample
 
-
+%%
 sourceType = 'stringOrth';
 make_connectionPlot
 

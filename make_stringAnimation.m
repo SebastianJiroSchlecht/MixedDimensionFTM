@@ -18,6 +18,6 @@ downsample = 1;
 x = linspace(0,string.l,1000);
 stringC = s.state.Cs(x,1:s.ftm.Mu) * 10;
 
-wantToRecord = false;
+wantToRecord = true;
 videoName = 'string_animation';
 recordVideo(wantToRecord, videoName, @(w,v) animateString(stringC, s.ybar , downsample, w, v) )
