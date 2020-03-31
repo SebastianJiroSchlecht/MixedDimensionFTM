@@ -21,7 +21,7 @@ switch sourceType
         T12 = connectStringModel(string.x, string.y, s.ftm.Ks, s.ftm.nmu, r.ftm.K1, r.ftm.K2, s.ftm.Mu, r.ftm.Mu);
     case 'stringOrth'
         string = stringParameters();
-        stringAngle = 0.0 * pi;
+        stringAngle = 0.5 * pi;
         stringOrigin = [string.x(0); string.y(0)];
         stringLength = string.l;
         string = setStringPosition(string, stringLength, stringAngle, stringOrigin);

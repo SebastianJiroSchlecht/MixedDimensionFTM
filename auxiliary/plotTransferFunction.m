@@ -15,6 +15,7 @@ yticks((1:100:length(f))+0.5)
 yticklabels(round(f(1:100:end)));
 xlabel('String Frequency [Hz]')
 ylabel('Room Frequency [Hz]')
+colorbar;
 axis tight;
 
 

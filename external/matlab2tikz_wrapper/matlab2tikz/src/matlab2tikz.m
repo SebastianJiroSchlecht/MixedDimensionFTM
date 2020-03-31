@@ -3514,7 +3514,7 @@ function [m2t, opts, s] = shaderOptsSurfPatchEdgeNone(m2t, handle, opts, s)
 % gets the shader options for surface patches without edges
 s.hasOneEdgeColor = true; % consider void as true
 if strcmpi(s.faceColor, 'flat')
-    opts = opts_add(opts,'shader','flat');
+    opts = opts_add(opts,'shader','flat corner');
 elseif strcmpi(s.faceColor, 'interp');
     opts = opts_add(opts,'shader','interp');
 else
