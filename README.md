@@ -9,3 +9,7 @@
 ```
 run_all
 ```
+
+Sound examples and videos can be found on 
+
+https://www.sebastianjiroschlecht.com/publication/schaefer2020-ab/
