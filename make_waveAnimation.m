@@ -3,7 +3,7 @@ close all;
 % sourceType = 'string';
 
 %% Simulation Basics
-[Fs,T,dur,t,len] = simulationParameters(0.01);
+[Fs,T,dur,t,len] = simulationParameters(0.05);
 
 %% Room model
 [room,r.ftm] = roomParameters();

@@ -1,7 +1,7 @@
 % Sebastian J. Schlecht, Friday, 20 March 2020
 close all;
 % sourceType = 'string';
-% position = 1;
+% position = 11;
 
 %% Simulation Basics
 [Fs,T,dur,t,len] = simulationParameters(10);
@@ -54,33 +54,33 @@ switch position
         room.pickup.x = 1;
         room.pickup.y = 1;
         stringAngle = 1.9 * pi;   
-    case 11
-        room.pickup.x = 1;
-        room.pickup.y = 2;
+    case 11 % listening position changes
+        room.pickup.x = 2.7;
+        room.pickup.y = 1.9;
         stringAngle = 0 * pi;  
     case 12
-        room.pickup.x = 1;
-        room.pickup.y = 3;
+        room.pickup.x = 2.7;
+        room.pickup.y = 1.8;
         stringAngle = 0 * pi;  
     case 13
-        room.pickup.x = 1;
-        room.pickup.y = 4;
+        room.pickup.x = 2.7;
+        room.pickup.y = 1.7;
         stringAngle = 0 * pi;  
     case 14
-        room.pickup.x = 2;
-        room.pickup.y = 1;
+        room.pickup.x = 2.7;
+        room.pickup.y = 1.5;
         stringAngle = 0 * pi;   
     case 15
-        room.pickup.x = 2;
-        room.pickup.y = 2;
+        room.pickup.x = 2.7;
+        room.pickup.y = 1.3;
         stringAngle = 0 * pi;    
     case 16
-        room.pickup.x = 2;
-        room.pickup.y = 3;
+        room.pickup.x = 2.7;
+        room.pickup.y = 1.1;
         stringAngle = 0 * pi;  
     case 17
-        room.pickup.x = 2;
-        room.pickup.y = 4;
+        room.pickup.x = 2.7;
+        room.pickup.y = 0.7;
         stringAngle = 0 * pi;  
     otherwise
         error('Not defined');

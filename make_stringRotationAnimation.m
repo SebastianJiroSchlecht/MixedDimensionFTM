@@ -2,7 +2,7 @@
 clear; clc; close all;
 
 %% Simulation Basics
-[Fs,T,dur,t,len] = simulationParameters(0.02);
+[Fs,T,dur,t,len] = simulationParameters(0.05);
 
 %% Room model
 [room,r.ftm] = roomParameters();

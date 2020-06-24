@@ -3,7 +3,7 @@ function string = stringParameters()
 %% String parameters
 stringH.E = 5.4e9;
 stringH.p = 1140;       %in kg/m^3
-stringH.l = 1;
+stringH.l = 0.65;
 stringH.A = 0.5188e-6;  %in m^2
 stringH.I = 0.171e-12;
 stringH.d1 = 8 * 10^-5;
@@ -33,7 +33,7 @@ string = stringH;
 
 %% Position
 stringAngle = 0.1 * pi;
-stringOrigin = [2; 3];
+stringOrigin = [2.5; 2];
 stringLength = string.l;
 string = setStringPosition(string, stringLength, stringAngle, stringOrigin);
 

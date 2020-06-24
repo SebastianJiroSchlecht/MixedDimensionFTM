@@ -1,8 +1,8 @@
 function [room,ftm] = roomParameters()
 
 %% Room model basics
-room.Lx = 7;
-room.Ly = 5;
+room.Lx = 4;
+room.Ly = 3;
 
 room.c0 = 340;
 room.rho = 1.2041;
