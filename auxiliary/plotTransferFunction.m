@@ -13,6 +13,7 @@ xticks((1:length(s.ftm.smu(1:end/2)))+0.5)
 xticklabels(round(s2f(s.ftm.smu(1:end/2))));
 yticks((1:100:length(f))+0.5)
 yticklabels(round(f(1:100:end)));
+set(gca,'XAxisLocation','bottom','YAxisLocation','left','ydir','normal');
 xlabel('String Frequency [Hz]')
 ylabel('Room Frequency [Hz]')
 colorbar;
