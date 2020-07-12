@@ -6,7 +6,7 @@ stringH.p = 1140;       %in kg/m^3
 stringH.l = 0.65;
 stringH.A = 0.5188e-6;  %in m^2
 stringH.I = 0.171e-12;
-stringH.d1 = 8 * 10^-5;
+stringH.d1 = 160 * 10^-5;
 stringH.d3 = 1.4 * 10^-5;
 stringH.Ts = 60.97;     % in N
 

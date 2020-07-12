@@ -58,15 +58,17 @@ switch sourceType
     case 'string'
         videoName = 'animateStringInRoom';
         animate = @animateStringInRoom;
+        roomPlotFactor = 1.6;
     case 'point'
         videoName = 'animatePointStringInRoom';
         animate = @animatePointStringInRoom;
+        roomPlotFactor = 0.3;
 end
 
 %% Plot 
 figure(742); hold on; set(gcf,'position',[808   546   796   391],'color','w');
-timeIndex = 350;        
-animate(x, y, roomC, r.ybar(:,timeIndex), string, stringC, s.ybar(:,timeIndex), downsample, false, v)
+timeIndex = 220;        
+animate(x, y, roomC, roomPlotFactor*r.ybar(:,timeIndex), string, stringC, s.ybar(:,timeIndex), downsample, false, v)
 matlab2tikz_sjs(['./plot/wavePlot_' sourceType '.tikz']);
 
 %% Animation
