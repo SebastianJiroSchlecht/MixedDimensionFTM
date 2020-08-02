@@ -73,7 +73,7 @@ matlab2tikz_sjs(['./plot/wavePlot_' sourceType '.tikz']);
 
 %% Animation
 figure(741); hold on; set(gcf,'position',[808   546   796   391],'color','w');
-recordVideo(wantToRecord, videoName, @(w,v) animate(x, y, roomC, r.ybar, string, stringC, s.ybar, downsample, w, v) )
+recordVideo(wantToRecord, videoName, @(w,v) animate(x, y, roomC, roomPlotFactor*r.ybar, string, stringC, s.ybar, downsample, w, v) )
 
 
 

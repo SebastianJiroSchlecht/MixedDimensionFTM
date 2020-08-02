@@ -17,27 +17,27 @@ switch position
     case 1
         room.pickup.x = 1;
         room.pickup.y = 1;
-        stringAngle = 0.1 * pi;
+        stringAngle = 0.0 * pi;
     case 2
         room.pickup.x = 1;
         room.pickup.y = 1;
-        stringAngle = 0.3 * pi;        
+        stringAngle = 0.2 * pi;        
     case 3
         room.pickup.x = 1;
         room.pickup.y = 1;
-        stringAngle = 0.5 * pi;   
+        stringAngle = 0.3 * pi;   
     case 4
         room.pickup.x = 1;
         room.pickup.y = 1;
-        stringAngle = 0.7 * pi;   
+        stringAngle = 0.5 * pi;   
     case 5
         room.pickup.x = 1;
         room.pickup.y = 1;
-        stringAngle = 0.9 * pi;   
+        stringAngle = 0.7 * pi;   
     case 6
         room.pickup.x = 1;
         room.pickup.y = 1;
-        stringAngle = 1.1 * pi;   
+        stringAngle = 1.0 * pi;   
     case 7 
         room.pickup.x = 1;
         room.pickup.y = 1;
