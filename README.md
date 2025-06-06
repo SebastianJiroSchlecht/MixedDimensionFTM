@@ -12,4 +12,4 @@ run_all
 
 Sound examples and videos can be found on 
 
-https://www.sebastianjiroschlecht.com/publication/schaefer-2020-string/
+https://www.sebastianjiroschlecht.com/publication/String-In-Room/
